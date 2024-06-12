@@ -1,1 +1,1 @@
-export const a = 1;
+export { default as MediaSelector } from "./mediaSelector/mediaSelector";

@@ -1,5 +1,16 @@
+import { SnackbarProvider } from "notistack";
+
+import { MainLayout } from "./components/templates";
+import { MainRouter } from "./routing";
+
 function App() {
-  return <div>123</div>;
+  return (
+    <MainLayout>
+      <SnackbarProvider>
+        <MainRouter />
+      </SnackbarProvider>
+    </MainLayout>
+  );
 }
 
 export default App;
