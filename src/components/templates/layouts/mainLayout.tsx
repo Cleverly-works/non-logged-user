@@ -7,8 +7,8 @@ const styles: Record<string, any> = {
   main: {
     height: "95vh",
   },
-  body: (isWidth400pxOrLess: boolean) => ({
-    padding: isWidth400pxOrLess ? "5px" : "40px",
+  body: (isWidth425pxOrLess: boolean) => ({
+    padding: isWidth425pxOrLess ? "5px" : "40px",
     height: "100%",
   }),
   appBar: {
@@ -30,24 +30,31 @@ type MainLayoutProps = {
 };
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const isWidth400pxOrLess = useMediaQuery("(max-width: 430px)");
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
 
   return (
     <>
       <AppBar position="static" sx={styles.appBar}>
-        <Stack direction="row" rowGap={2}>
-          <img style={styles.image} alt="..." />
-          <Stack>
-            <Typography typography="h5" sx={styles.title}>
-              Welcome to Homyze
-            </Typography>
-            <Typography typography="h5">
-              Here you can report an issue quickly and easily
-            </Typography>
-          </Stack>
+        <Stack direction="row" alignItems="center" rowGap={2}>
+          <img
+            src={require("../../../images/icon-white.png")}
+            style={styles.image}
+            alt="..."
+          />
+          {!isWidth425pxOrLess && (
+            <Stack ml={5}>
+              <Typography typography="h5" sx={styles.title}>
+                Welcome to Homyze issue reporting tool brought to you by
+                Cleverly
+              </Typography>
+              <Typography typography="h5">
+                Here you can report an issue quickly and easily
+              </Typography>
+            </Stack>
+          )}
         </Stack>
       </AppBar>
-      <Box sx={styles.body(isWidth400pxOrLess)}>{children}</Box>
+      <Box sx={styles.body(isWidth425pxOrLess)}>{children}</Box>
     </>
   );
 };

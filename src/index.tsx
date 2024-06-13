@@ -1,8 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "@fontsource/nunito"; // Defaults to weight 400
+import "@fontsource/nunito/400.css"; // Specify weight
+import "@fontsource/nunito/400-italic.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

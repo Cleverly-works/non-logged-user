@@ -9,8 +9,12 @@ import { FieldValues, UseFormSetValue } from "react-hook-form";
 
 const styles: Record<string, any> = {
   mediaItems: {
+    marginTop: "10px",
     height: "200px",
     overflow: "auto",
+  },
+  textDefault: {
+    textTransform: "none",
   },
 };
 
@@ -49,17 +53,18 @@ const MediaSelector: React.FC<MediaSelectorProps> = ({ values, setValue }) => {
 
   return (
     <Stack>
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography>Add issue photo:</Typography>
-        <Tooltip title="Add new issue photo" placement="top-start">
-          <IconButton
-            component={Button}
-            size="small"
-            onClick={handleAddMediaItem}
-          >
-            <Add />
-          </IconButton>
-        </Tooltip>
+      <Stack alignItems="flex-start" spacing={1}>
+        <Typography>
+          Please upload any media associated with this issue
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={styles.textDefault}
+          onClick={handleAddMediaItem}
+        >
+          Upload media
+        </Button>
       </Stack>
 
       <Stack pl={2} spacing={0.8} sx={styles.mediaItems}>

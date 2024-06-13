@@ -1,70 +1,127 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { Modal, Typography, Stack, Button } from "@mui/material";
+import React from "react";
+import { Modal, Typography, Stack, Button, Box } from "@mui/material";
+
 import { colors } from "../../../const";
-// import { IssueType } from "../../../components/molecules";
+import { IssueType } from "../../../components/molecules";
 
 const styles: Record<string, any> = {
   modal: {
-    width: "30%",
-    height: "30%",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    width: "400px",
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
     backgroundColor: colors.defaultWhite,
     zIndex: 10000,
+  },
+  infoItem: {
+    margin: "10px 0px",
+    alignItems: "center",
+  },
+  label: {
+    width: "160px",
+    fontWeight: "600",
+  },
+  value: {
+    overflow: "hidden",
+    whiteSpace: "no-wrap",
+    textOverflow: "ellipsis",
+    width: "250px",
+    marginLeft: "50px",
+  },
+  bottomButtons: {
+    justifyContent: "space-between",
+    marginTop: "25px",
+  },
+  backButton: {
+    color: colors.defaultBlack,
+    borderColor: colors.defaultBlack,
+    ":hover": {
+      borderColor: colors.defaultBlack,
+    },
   },
 };
 
 type SubmitModalProps = {
   open: boolean;
-  onClose: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
+  onSubmit: () => void;
   formData: any;
 };
 
 const SubmitModal: React.FC<SubmitModalProps> = ({
   open,
   onClose,
+  onSubmit,
   formData,
 }) => {
-  console.log(formData);
   return (
-    <Modal open={open} onClose={onClose} sx={styles.modal}>
-      <Stack>
-        <Typography typography="h4">
+    <Modal open={open} onClose={onClose}>
+      <Box sx={styles.modal}>
+        <Typography typography="h5" textAlign="center">
           Please check the information entered is correct
         </Typography>
-        <Stack direction="row">
-          <Typography typography="subtile1">Your location: </Typography>
-          <Typography typography="subtile2">
+        <Stack direction="row" sx={styles.infoItem}>
+          <Typography typography="subtile1" sx={styles.label}>
+            Your location:&nbsp;
+          </Typography>
+          <Typography typography="subtile2" sx={styles.value}>
             {formData.location.label}
           </Typography>
         </Stack>
-        <Stack direction="row">
-          <Typography typography="subtile1">Relevant issue: </Typography>
-          {/* <IssueType name={} /> */}
+        <Stack direction="row" sx={styles.infoItem}>
+          <Typography typography="subtile1" sx={styles.label}>
+            Relevant issue:&nbsp;
+          </Typography>
+          <IssueType {...formData.issueType} displayMode />
         </Stack>
-        <Stack direction="row">
-          <Typography typography="subtile1">Description: </Typography>
-          <Typography typography="subtile2">
-            {formData.location.name}
+        <Stack direction="row" sx={styles.infoItem}>
+          <Typography typography="subtile1" sx={styles.label}>
+            Description:&nbsp;
+          </Typography>
+          <Typography typography="subtile2" sx={styles.value}>
+            {formData.description}
           </Typography>
         </Stack>
-        <Stack direction="row">
-          <Typography typography="subtile1">Your name: </Typography>
-          <Typography typography="subtile2">{formData.name}</Typography>
+        <Stack direction="row" sx={styles.infoItem}>
+          <Typography typography="subtile1" sx={styles.label}>
+            Your name:&nbsp;
+          </Typography>
+          <Typography typography="subtile2" sx={styles.value}>
+            {formData.name}
+          </Typography>
         </Stack>
-        <Stack direction="row">
-          <Typography typography="subtile1">Email: </Typography>
-          <Typography typography="subtile2">{formData.email}</Typography>
+        <Stack direction="row" sx={styles.infoItem}>
+          <Typography typography="subtile1" sx={styles.label}>
+            Email:&nbsp;
+          </Typography>
+          <Typography typography="subtile2" sx={styles.value}>
+            {formData.email}
+          </Typography>
         </Stack>
-        <Stack direction="row">
-          <Typography typography="subtile1">Number: </Typography>
-          <Typography typography="subtile2">{formData.phone}</Typography>
+        <Stack direction="row" sx={styles.infoItem}>
+          <Typography typography="subtile1" sx={styles.label}>
+            Number:&nbsp;
+          </Typography>
+          <Typography typography="subtile2" sx={styles.value}>
+            {formData.phone}
+          </Typography>
         </Stack>
-        <Stack direction="row">
-          <Button variant="outlined">Back</Button>
-          <Button variant="contained" color="primary">
+        <Stack direction="row" sx={styles.bottomButtons}>
+          <Button variant="outlined" sx={styles.backButton} onClick={onClose}>
+            Back
+          </Button>
+          <Button variant="contained" color="primary" onClick={onSubmit}>
             Submit
           </Button>
         </Stack>
-      </Stack>
+      </Box>
     </Modal>
   );
 };

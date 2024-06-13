@@ -98,7 +98,7 @@ export const MediaSelectorItem: React.FC<MediaSelectorItemProps> = ({
       {!edit ? (
         <Stack
           direction="row"
-          justifyContent="space-between"
+          justifyContent="flex-start"
           alignItems="center"
           spacing={1}
         >
@@ -130,7 +130,7 @@ export const MediaSelectorItem: React.FC<MediaSelectorItemProps> = ({
               fullWidth
               label="Caption"
               variant="standard"
-              color="secondary"
+              color="primary"
               {...register("caption")}
             />
 
@@ -138,7 +138,7 @@ export const MediaSelectorItem: React.FC<MediaSelectorItemProps> = ({
               <Stack rowGap={3}>
                 <Stack
                   direction="row"
-                  justifyContent="space-between"
+                  justifyContent="flex-start"
                   alignItems="center"
                 >
                   <Typography
@@ -156,7 +156,7 @@ export const MediaSelectorItem: React.FC<MediaSelectorItemProps> = ({
                       sx={{ ":hover": { backgroundColor: "#DDDDDD" } }}
                       onClick={handleReselectAttachment}
                     >
-                      <Delete />
+                      <Delete sx={{ fontSize: "16px" }} />
                     </IconButton>
                   </Tooltip>
                 </Stack>
