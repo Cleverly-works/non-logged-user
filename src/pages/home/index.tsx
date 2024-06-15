@@ -27,8 +27,9 @@ import { issueReportValidationSchema } from "./form/reportIssueValidationSchema"
 import { RoutesPath } from "../../routing/routes";
 import { colors } from "../../const";
 import { LoadingLayout } from "../../components/templates";
+import { usePredefinedQueryParams } from "../../hooks";
 
-const mockData = new Array(10).fill(null).map((_, ndx) => ({
+const mockData = new Array(20).fill(null).map((_, ndx) => ({
   id: ndx,
   label: "Label" + ndx,
   imageLink: mockImage,
@@ -38,7 +39,10 @@ const styles = {
   stepBox: {
     margin: "0 20px",
   },
-
+  mainTitle: {
+    margin: "0px 20px",
+    marginBottom: "20px",
+  },
   submitButton: (isWidth425pxOrLess: boolean) => ({
     height: "35px",
     ...(isWidth425pxOrLess
@@ -68,9 +72,18 @@ const styles = {
   textDefault: {
     textTransform: "none",
   },
+  issueTypes: {
+    height: "600px",
+    overflow: "auto",
+  },
+  mr: {
+    marginLeft: "3em",
+  },
 };
 
 export const HomePage = () => {
+  const predefined = usePredefinedQueryParams();
+
   const {
     control,
     formState: { errors },
@@ -79,9 +92,16 @@ export const HomePage = () => {
     register,
     handleSubmit,
     reset,
+    getValues,
   } = useForm({
+    defaultValues: {
+      location: predefined?.location.locationForSelect,
+      sublocation: predefined?.sublocation?.sublocationForSelect,
+    },
     resolver: yupResolver(issueReportValidationSchema),
   });
+
+  console.log(getValues());
   const [reportIssueData, setReportIssueData] = useState<any | null>(null);
   const [isModalOpen, setisModalOpen] = useState<boolean>(false);
   const [locationsLoading, setLocationsLoading] = useState<boolean>(false);
@@ -95,7 +115,7 @@ export const HomePage = () => {
   const [sublocations, setSublocations] = useState<any[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 768px)");
 
   const mediaFilesWatch = watch("attachments") || [];
   const locationWatch = watch("location");
@@ -158,6 +178,10 @@ export const HomePage = () => {
   return (
     <LoadingLayout loading={creatingReportLoading}>
       <>
+        <Typography typography="h6" sx={styles.mainTitle}>
+          Please complete the fields below with details of the issue and then
+          click submit.
+        </Typography>
         <form onSubmit={handleSubmit(handleReportAnIssue)}>
           <Stack
             justifyContent="space-between"
@@ -179,6 +203,7 @@ export const HomePage = () => {
                   render={({ field: { value, onChange } }) => (
                     <SearchAutocomplete
                       value={value}
+                      disabled={!!predefined?.location.id}
                       loading={locationsLoading}
                       textFieldProps={{
                         color: "primary",
@@ -193,13 +218,14 @@ export const HomePage = () => {
                     />
                   )}
                 />
-                {locationWatch && (
+                {locationWatch && predefined?.sublocation && (
                   <Controller
                     name="sublocation"
                     control={control}
                     render={({ field: { value, onChange } }) => (
                       <SearchAutocomplete
                         value={value}
+                        disabled={!!predefined?.sublocation?.id}
                         loading={sublocationsLoading}
                         textFieldProps={{
                           color: "primary",
@@ -238,23 +264,29 @@ export const HomePage = () => {
                   width: isWidth425pxOrLess ? "100%" : "55%",
                 }}
               >
-                <StepLabel counter={2} text="Select the relevant issue type" />
-                {!!errors?.issueType && (
-                  <Typography
-                    typography="subtitle1"
-                    mb={2}
-                    sx={styles.errorText}
-                  >
-                    {errors.issueType?.id?.message}
-                  </Typography>
-                )}
+                <Stack sx={styles.mr}>
+                  <StepLabel
+                    counter={2}
+                    text="Select the relevant issue type"
+                  />
+                  {!!errors?.issueType && (
+                    <Typography
+                      typography="subtitle1"
+                      mb={2}
+                      sx={styles.errorText}
+                    >
+                      {errors.issueType?.id?.message}
+                    </Typography>
+                  )}
+                </Stack>
                 <Stack
                   direction="row"
                   justifyContent={
                     isWidth425pxOrLess ? "space-between" : "flex-start"
                   }
                   flexWrap="wrap"
-                  m={2}
+                  sx={styles.issueTypes}
+                  m={1}
                 >
                   {mockData.map((props) => (
                     <IssueType

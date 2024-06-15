@@ -93,6 +93,10 @@ export const MediaSelectorItem: React.FC<MediaSelectorItemProps> = ({
     [setAttachment],
   );
 
+  const createURL = () => {
+    return URL.createObjectURL(media || attachment);
+  };
+
   return (
     <form>
       {!edit ? (
@@ -102,15 +106,17 @@ export const MediaSelectorItem: React.FC<MediaSelectorItemProps> = ({
           alignItems="center"
           spacing={1}
         >
-          <Typography
-            sx={{
-              color: colors.mainBlue,
-              fontWeight: 600,
-              pointerEvents: "none",
-            }}
-          >
-            {caption || media?.name}
-          </Typography>
+          <a href={createURL()} target="_blank" rel="noreferrer">
+            <Typography
+              sx={{
+                color: colors.mainBlue,
+                fontWeight: 600,
+                pointerEvents: "none",
+              }}
+            >
+              {caption || media?.name}
+            </Typography>
+          </a>
           {!noDelete && (
             <Tooltip title="Delete" placement="top-start">
               <IconButton

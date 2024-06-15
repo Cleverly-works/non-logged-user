@@ -23,6 +23,7 @@ type SearchAutocompleteProps = {
   }[];
   onOpen?: (e: SyntheticEvent) => any;
   setSearch?: (inputValue: string) => any;
+  disabled?: boolean;
   textFieldProps?: {
     label?: string;
     variant?: "standard" | "outlined";

@@ -1,15 +1,21 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { colors } from "../../../const";
 
 const styles: Record<string, any> = {
-  wrapper: (isSelected: boolean, blurred: boolean, displayMode: boolean) => ({
+  wrapper: (
+    isWidth425pxOrLess: boolean,
+    isSelected: boolean,
+    blurred: boolean,
+    displayMode: boolean,
+  ) => ({
     display: "inline-flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    width: "130px",
-    height: "130px",
+    ...(isWidth425pxOrLess
+      ? { width: "120px", height: "120px" }
+      : { width: "180px", height: "180px" }),
     ...(!displayMode ? { margin: "10px", padding: "20px" } : {}),
     boxSizing: "border-box",
     opacity: blurred ? 0.5 : 1,
@@ -22,10 +28,11 @@ const styles: Record<string, any> = {
           },
         }),
   }),
-  image: {
-    width: "80px",
-    height: "80px",
-  },
+  image: (isWidth425pxOrLess: boolean) => ({
+    ...(isWidth425pxOrLess
+      ? { width: "80px", height: "80px" }
+      : { width: "120px", height: "120px" }),
+  }),
 };
 
 type IssueTypeProps = {
@@ -47,16 +54,17 @@ const IssueType: React.FC<IssueTypeProps> = ({
   displayMode = false,
   isSelected = false,
 }) => {
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
   return (
     <Box
-      sx={styles.wrapper(isSelected, blurred, displayMode)}
+      sx={styles.wrapper(isWidth425pxOrLess, isSelected, blurred, displayMode)}
       onClick={() =>
         onSelectIssueType &&
         !displayMode &&
         onSelectIssueType({ id, imageLink, label })
       }
     >
-      <img src={imageLink} alt="..." style={styles.image} />
+      <img src={imageLink} alt="..." style={styles.image(isWidth425pxOrLess)} />
       <Typography typography="subtitle1">{label}</Typography>
     </Box>
   );

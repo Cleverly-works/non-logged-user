@@ -1,25 +1,32 @@
 import React from "react";
-import { Modal, Typography, Stack, Button, Box } from "@mui/material";
+import {
+  Modal,
+  Typography,
+  Stack,
+  Button,
+  Box,
+  useMediaQuery,
+} from "@mui/material";
 
 import { colors } from "../../../const";
-import { IssueType } from "../../../components/molecules";
+import { IssueType, MediaDisplay } from "../../../components/molecules";
 
 const styles: Record<string, any> = {
-  modal: {
+  modal: (isWidth425pxOrLess: boolean) => ({
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     bgcolor: "background.paper",
     border: "2px solid #000",
-    width: "400px",
+    width: isWidth425pxOrLess ? "300px" : "500px",
     boxShadow: 24,
     pt: 2,
     px: 4,
     pb: 3,
     backgroundColor: colors.defaultWhite,
     zIndex: 10000,
-  },
+  }),
   infoItem: {
     margin: "10px 0px",
     alignItems: "center",
@@ -29,11 +36,14 @@ const styles: Record<string, any> = {
     fontWeight: "600",
   },
   value: {
-    overflow: "hidden",
-    whiteSpace: "no-wrap",
-    textOverflow: "ellipsis",
-    width: "250px",
+    width: "80%",
     marginLeft: "50px",
+  },
+  description: {
+    width: "300px",
+    maxHeight: "150px",
+    overflowY: "auto",
+    marginLeft: "20px",
   },
   bottomButtons: {
     justifyContent: "space-between",
@@ -61,9 +71,11 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
   onSubmit,
   formData,
 }) => {
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={styles.modal}>
+      <Box sx={styles.modal(isWidth425pxOrLess)}>
         <Typography typography="h5" textAlign="center">
           Please check the information entered is correct
         </Typography>
@@ -76,7 +88,13 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
           </Typography>
         </Stack>
         <Stack direction="row" sx={styles.infoItem}>
-          <Typography typography="subtile1" sx={styles.label}>
+          <Typography
+            typography="subtile1"
+            sx={{
+              ...styles.label,
+              width: isWidth425pxOrLess ? "130px" : "160px",
+            }}
+          >
             Relevant issue:&nbsp;
           </Typography>
           <IssueType {...formData.issueType} displayMode />
@@ -85,9 +103,12 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
           <Typography typography="subtile1" sx={styles.label}>
             Description:&nbsp;
           </Typography>
-          <Typography typography="subtile2" sx={styles.value}>
-            {formData.description}
-          </Typography>
+          <Stack>
+            <Typography typography="subtile2" sx={styles.description}>
+              {formData.description}
+            </Typography>
+            <MediaDisplay mediaList={formData.attachments} />
+          </Stack>
         </Stack>
         <Stack direction="row" sx={styles.infoItem}>
           <Typography typography="subtile1" sx={styles.label}>

@@ -11,12 +11,12 @@ export const issueReportValidationSchema = yup.object().shape({
   issueType: yup
     .object()
     .shape({
-      id: yup.number().required("Issue type is a required field"),
-      label: yup.string().required("Issue type is a required field"),
-      imageLink: yup.string().required("Issue type is a required field"),
+      id: yup.number().required("Please choose a category of the issue"),
+      label: yup.string().required("Please choose a category of the issue"),
+      imageLink: yup.string().required("Please choose a category of the issue"),
     })
     .nonNullable()
-    .required("Issue type is a required field"),
+    .required("Please choose a category of the issue"),
   location: yup
     .object()
     .shape({
@@ -24,18 +24,22 @@ export const issueReportValidationSchema = yup.object().shape({
       value: yup.number().required(),
     })
     .nonNullable()
-    .required("Location is required"),
+    .required("Please choose your location"),
   sublocation: yup
     .object()
     .shape({
-      label: yup.string().required(),
-      value: yup.number().required(),
+      label: yup.string(),
+      value: yup.number(),
     })
     .nonNullable()
     .required("Sublocation is required"),
-  description: yup.string().required("Description is required"),
-  name: yup.string().required("Name is required"),
-  email: yup.string().email().required("Email is required"),
-  phone: yup.string().required("Phone is required"),
+  description: yup
+    .string()
+    .required(
+      "Please provide at least one media or a description of the issue",
+    ),
+  name: yup.string().required("Please enter your name"),
+  email: yup.string().email().required("Please enter your name"),
+  phone: yup.string().required("Please enter your phone number"),
   shouldSendNotifications: yup.boolean(),
 });
