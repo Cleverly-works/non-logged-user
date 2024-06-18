@@ -12,7 +12,7 @@ export const issueReportValidationSchema = yup.object().shape({
     .object()
     .shape({
       id: yup.number().required("Please choose a category of the issue"),
-      label: yup.string().required("Please choose a category of the issue"),
+      name: yup.string().required("Please choose a category of the issue"),
       imageLink: yup.string().required("Please choose a category of the issue"),
     })
     .nonNullable()

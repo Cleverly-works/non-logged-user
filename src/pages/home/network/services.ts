@@ -1,3 +1,7 @@
+import { apiClient } from "../../../apiClient";
+import { createIssueDataAdapter, issueTypesDataAdapter } from "./dataAdapters";
+import { homePageUrls } from "./url";
+
 export const getAllLocations = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -20,11 +24,20 @@ export const getAllSublocations = () => {
   });
 };
 
-export const createReportedIssue = (data: any) => {
-  console.log(data);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      return resolve({ jobId: 1234 });
-    }, 1000);
-  });
+export const createReportedIssue = async (
+  data: any,
+): Promise<{ jobId: number }> => {
+  const multipartFormData = createIssueDataAdapter(data);
+
+  const { data: response } = await apiClient.post<
+    any,
+    { data: { jobId: number } }
+  >(homePageUrls.createIssue, multipartFormData);
+
+  return response;
+};
+
+export const getIssueTypes = async () => {
+  const { data } = await apiClient.get(homePageUrls.getIssueTypes);
+  return issueTypesDataAdapter(data.issueTypes);
 };

@@ -19,45 +19,7 @@ const headers: RawAxiosRequestHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json; charset=utf-8",
   "X-Requested-With": "XMLHttpRequest",
-};
-
-const injectToken = (config: AxiosCustomConfig): AxiosCustomConfig => {
-  const axiosConfig: AxiosCustomConfig = config;
-
-  try {
-    const token = localStorage.getItem("token");
-
-    if (token != null && !config?.publicMethod) {
-      axiosConfig.headers!.Authorization = `Bearer ${token}`;
-    }
-
-    return axiosConfig;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-const injectDeviceId = (config: AxiosCustomConfig): AxiosCustomConfig => {
-  const axiosConfig: AxiosCustomConfig = config;
-
-  if (config.addDeviceId) {
-    axiosConfig.headers!["Mobile-App-Device-Id"] = "Browser";
-  }
-
-  return axiosConfig;
-};
-
-const injectTimezoneHeader = (config: AxiosCustomConfig): AxiosCustomConfig => {
-  const axiosConfig: AxiosCustomConfig = config;
-
-  if (config.addTimezone) {
-    const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
-
-    axiosConfig.headers!["X-Client-Timezone"] =
-      !timeZone || timeZone === "Etc/Unknown" ? "UTC" : timeZone;
-  }
-
-  return axiosConfig;
+  "x-api-key": envConfig.API_KEY,
 };
 
 class ApiClient {
@@ -115,11 +77,7 @@ class ApiClient {
     http.interceptors.response.use(
       (response) => response,
       (error: AxiosError<any>) => {
-        const { response, config } = error;
-
-        // if (!(config as AxiosCustomConfig).isSilent) {
-        //   errorHandler(error);
-        // }
+        const { response } = error;
 
         return Promise.reject(response);
       },

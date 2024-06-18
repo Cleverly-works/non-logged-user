@@ -87,6 +87,16 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
             {formData.location.label}
           </Typography>
         </Stack>
+        {formData.sublocation && (
+          <Stack direction="row" sx={styles.infoItem}>
+            <Typography typography="subtile1" sx={styles.label}>
+              Your sublocation:&nbsp;
+            </Typography>
+            <Typography typography="subtile2" sx={styles.value}>
+              {formData.sublocation.label}
+            </Typography>
+          </Stack>
+        )}
         <Stack direction="row" sx={styles.infoItem}>
           <Typography
             typography="subtile1"

@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, Box, Stack, Typography, useMediaQuery } from "@mui/material";
 
 import { colors } from "../../../const";
+import background from "../../../images/background1.svg";
 
 const styles: Record<string, any> = {
   main: {
@@ -10,6 +11,8 @@ const styles: Record<string, any> = {
   body: (isWidth425pxOrLess: boolean) => ({
     padding: isWidth425pxOrLess ? "5px" : "40px",
     height: "100%",
+    backgroundImage: `url('${background}')`,
+    backgroundRepeat: "no-repeat",
   }),
   appBar: {
     height: "7rem",

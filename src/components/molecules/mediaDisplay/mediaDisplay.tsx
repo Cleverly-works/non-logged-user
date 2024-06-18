@@ -25,10 +25,14 @@ type MediaDisplayProps = {
 
 const MediaDisplay: React.FC<MediaDisplayProps> = ({
   sx: outerSx = {},
-  mediaList,
+  mediaList = [],
 }) => {
   const slicedMediaList =
-    mediaList.length >= 3 ? mediaList.slice(0, 2) : mediaList;
+    mediaList?.length >= 3 ? mediaList.slice(0, 2) : mediaList;
+
+  if (!mediaList.length) {
+    return null;
+  }
 
   return (
     <Stack direction="row" sx={{ ...styles.mediaList, ...outerSx }}>

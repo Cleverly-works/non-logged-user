@@ -1,5 +1,7 @@
 import React from "react";
 import { Box, Typography, useMediaQuery } from "@mui/material";
+
+import defaultIssueIcon from "../../../images/icon.svg";
 import { colors } from "../../../const";
 
 const styles: Record<string, any> = {
@@ -37,17 +39,17 @@ const styles: Record<string, any> = {
 
 type IssueTypeProps = {
   id: number;
-  label: string;
+  name: string;
   imageLink: string;
   isSelected?: boolean;
   blurred?: boolean;
   displayMode?: boolean;
-  onSelectIssueType?: ({ id, imageLink, label }: any) => any;
+  onSelectIssueType?: ({ id, imageLink, name }: any) => any;
 };
 
 const IssueType: React.FC<IssueTypeProps> = ({
   id,
-  label,
+  name,
   onSelectIssueType,
   imageLink,
   blurred = false,
@@ -61,11 +63,15 @@ const IssueType: React.FC<IssueTypeProps> = ({
       onClick={() =>
         onSelectIssueType &&
         !displayMode &&
-        onSelectIssueType({ id, imageLink, label })
+        onSelectIssueType({ id, imageLink, name })
       }
     >
-      <img src={imageLink} alt="..." style={styles.image(isWidth425pxOrLess)} />
-      <Typography typography="subtitle1">{label}</Typography>
+      <img
+        src={imageLink || defaultIssueIcon}
+        alt="..."
+        style={styles.image(isWidth425pxOrLess)}
+      />
+      <Typography typography="subtitle1">{name}</Typography>
     </Box>
   );
 };

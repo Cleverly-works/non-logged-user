@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
@@ -19,21 +19,15 @@ import {
   createReportedIssue,
   getAllLocations,
   getAllSublocations,
+  getIssueTypes,
 } from "./network/services";
 import { MediaSelector } from "../../components/organisms";
 import { SubmitModal } from "./modals";
-import mockImage from "../../images/icon.svg";
 import { issueReportValidationSchema } from "./form/reportIssueValidationSchema";
 import { RoutesPath } from "../../routing/routes";
 import { colors } from "../../const";
 import { LoadingLayout } from "../../components/templates";
 import { usePredefinedQueryParams } from "../../hooks";
-
-const mockData = new Array(20).fill(null).map((_, ndx) => ({
-  id: ndx,
-  label: "Label" + ndx,
-  imageLink: mockImage,
-}));
 
 const styles = {
   stepBox: {
@@ -92,7 +86,6 @@ export const HomePage = () => {
     register,
     handleSubmit,
     reset,
-    getValues,
   } = useForm({
     defaultValues: {
       location: predefined?.location.locationForSelect,
@@ -101,7 +94,8 @@ export const HomePage = () => {
     resolver: yupResolver(issueReportValidationSchema),
   });
 
-  console.log(getValues());
+  console.log(errors);
+
   const [reportIssueData, setReportIssueData] = useState<any | null>(null);
   const [isModalOpen, setisModalOpen] = useState<boolean>(false);
   const [locationsLoading, setLocationsLoading] = useState<boolean>(false);
@@ -111,6 +105,7 @@ export const HomePage = () => {
     useState<boolean>(false);
   const navigate = useNavigate();
 
+  const [issueTypes, setIssueTypes] = useState<any[]>([]);
   const [locations, setLocations] = useState<any[]>([]);
   const [sublocations, setSublocations] = useState<any[]>([]);
   const { enqueueSnackbar } = useSnackbar();
@@ -120,6 +115,19 @@ export const HomePage = () => {
   const mediaFilesWatch = watch("attachments") || [];
   const locationWatch = watch("location");
   const issueTypeWatch = watch("issueType");
+
+  useEffect(() => {
+    getIssueTypes()
+      .then((data: any) => {
+        setIssueTypes(data);
+      })
+      .catch((e) => {
+        enqueueSnackbar({
+          variant: "error",
+          message: e.message,
+        });
+      });
+  }, [enqueueSnackbar]);
 
   const getLocations = (): void => {
     setLocationsLoading(true);
@@ -160,10 +168,13 @@ export const HomePage = () => {
 
   const handleSubmitForm = (): void => {
     setCreatingReportLoading(true);
-    createReportedIssue(reportIssueData)
-      .then(() => {
+    createReportedIssue({
+      ...reportIssueData,
+      customerId: predefined?.customer.id,
+    })
+      .then((data) => {
         setCreatingReportLoading(false);
-        navigate(`${RoutesPath.ACKNOWLEDGMENT}?jobId=${12345}`);
+        navigate(`${RoutesPath.ACKNOWLEDGMENT}?jobId=${data.jobId}`);
         reset();
       })
       .catch((e) => {
@@ -284,11 +295,12 @@ export const HomePage = () => {
                   justifyContent={
                     isWidth425pxOrLess ? "space-between" : "flex-start"
                   }
+                  alignItems="flex-start"
                   flexWrap="wrap"
                   sx={styles.issueTypes}
-                  m={1}
+                  m={3}
                 >
-                  {mockData.map((props) => (
+                  {issueTypes.map((props) => (
                     <IssueType
                       {...props}
                       blurred={
