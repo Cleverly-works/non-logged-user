@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/react-gh-pages/static/css/main.52bc45f3.css",
+    "main.js": "/react-gh-pages/static/js/main.3b2a7c5c.js",
+    "static/js/453.5e260505.chunk.js": "/react-gh-pages/static/js/453.5e260505.chunk.js",
+    "static/media/icon-white.png": "/react-gh-pages/static/media/icon-white.e2bbdefe34a58010e9dd.png",
+    "static/media/icon.svg": "/react-gh-pages/static/media/icon.ddaafa419ed1625d0c6fc8bb54ac91c7.svg",
+    "static/media/background1.svg": "/react-gh-pages/static/media/background1.89be10a3c6be78daea3bf8b858840b6d.svg",
+    "static/media/nunito-latin-ext-400-italic.woff": "/react-gh-pages/static/media/nunito-latin-ext-400-italic.5f27cd6ef8a9c7842041.woff",
+    "static/media/nunito-latin-400-italic.woff": "/react-gh-pages/static/media/nunito-latin-400-italic.0144919495f3423ce741.woff",
+    "static/media/nunito-latin-ext-400-normal.woff": "/react-gh-pages/static/media/nunito-latin-ext-400-normal.71b591df087b973d02ed.woff",
+    "static/media/nunito-latin-400-normal.woff": "/react-gh-pages/static/media/nunito-latin-400-normal.993d6c50aeb5ceefdfc6.woff",
+    "static/media/nunito-latin-400-italic.woff2": "/react-gh-pages/static/media/nunito-latin-400-italic.f0c32eacc87a22a7f92f.woff2",
+    "static/media/nunito-latin-ext-400-italic.woff2": "/react-gh-pages/static/media/nunito-latin-ext-400-italic.69e7dc4601542031ddba.woff2",
+    "static/media/nunito-latin-400-normal.woff2": "/react-gh-pages/static/media/nunito-latin-400-normal.9f3f4583bd7c435a198c.woff2",
+    "static/media/nunito-latin-ext-400-normal.woff2": "/react-gh-pages/static/media/nunito-latin-ext-400-normal.ca34ca0f04c144c14d57.woff2",
+    "static/media/nunito-cyrillic-ext-400-italic.woff": "/react-gh-pages/static/media/nunito-cyrillic-ext-400-italic.9f8541b1d20fc2f3821f.woff",
+    "static/media/nunito-cyrillic-ext-400-normal.woff": "/react-gh-pages/static/media/nunito-cyrillic-ext-400-normal.bbc8ddfbf7a68744ec73.woff",
+    "static/media/nunito-cyrillic-ext-400-italic.woff2": "/react-gh-pages/static/media/nunito-cyrillic-ext-400-italic.50c3083fcb636061833f.woff2",
+    "static/media/nunito-cyrillic-400-italic.woff": "/react-gh-pages/static/media/nunito-cyrillic-400-italic.8033649ebc7c572ad777.woff",
+    "static/media/nunito-cyrillic-ext-400-normal.woff2": "/react-gh-pages/static/media/nunito-cyrillic-ext-400-normal.c74946f28a2a3bf21fa5.woff2",
+    "static/media/nunito-cyrillic-400-normal.woff": "/react-gh-pages/static/media/nunito-cyrillic-400-normal.953b7e54b868ff59dd91.woff",
+    "static/media/nunito-vietnamese-400-italic.woff": "/react-gh-pages/static/media/nunito-vietnamese-400-italic.20e4d6d9c47e3d14dea0.woff",
+    "static/media/nunito-cyrillic-400-italic.woff2": "/react-gh-pages/static/media/nunito-cyrillic-400-italic.d6f469544e7ed181716d.woff2",
+    "static/media/nunito-vietnamese-400-normal.woff": "/react-gh-pages/static/media/nunito-vietnamese-400-normal.1221888234e9ce4d67a2.woff",
+    "static/media/nunito-cyrillic-400-normal.woff2": "/react-gh-pages/static/media/nunito-cyrillic-400-normal.d849bc0e78e41c04b19a.woff2",
+    "static/media/nunito-vietnamese-400-italic.woff2": "/react-gh-pages/static/media/nunito-vietnamese-400-italic.1a78c4a743deb7c6ddd2.woff2",
+    "static/media/nunito-vietnamese-400-normal.woff2": "/react-gh-pages/static/media/nunito-vietnamese-400-normal.a83bae0c745757608a84.woff2",
+    "index.html": "/react-gh-pages/index.html",
+    "main.52bc45f3.css.map": "/react-gh-pages/static/css/main.52bc45f3.css.map",
+    "main.3b2a7c5c.js.map": "/react-gh-pages/static/js/main.3b2a7c5c.js.map",
+    "453.5e260505.chunk.js.map": "/react-gh-pages/static/js/453.5e260505.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.52bc45f3.css",
+    "static/js/main.3b2a7c5c.js"
+  ]
+}
