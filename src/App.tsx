@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 
 import { MainLayout } from "./components/templates";
 import { MainRouter } from "./routing";
+import { MainContext } from "./context";
 
 const theme = createTheme({
   typography: {
@@ -13,11 +14,13 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <MainLayout>
-        <SnackbarProvider>
-          <MainRouter />
-        </SnackbarProvider>
-      </MainLayout>
+      <MainContext>
+        <MainLayout>
+          <SnackbarProvider>
+            <MainRouter />
+          </SnackbarProvider>
+        </MainLayout>
+      </MainContext>
     </ThemeProvider>
   );
 }

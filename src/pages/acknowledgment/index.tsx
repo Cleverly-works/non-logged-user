@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { RoutesPath } from "../../routing/routes";
+import { mainContext } from "../../context";
 
 const styles: Record<string, object> = {
   mt: {
@@ -14,8 +15,14 @@ const styles: Record<string, object> = {
 };
 
 export const AcknowledgementPage: React.FC = () => {
-  const [params] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const { generalAppParams } = useContext(mainContext);
+
+  const navigateBack = () => {
+    navigate(`${RoutesPath.HOME}?${generalAppParams}`);
+  };
 
   return (
     <>
@@ -31,7 +38,7 @@ export const AcknowledgementPage: React.FC = () => {
         Your issue has been received and allocated reference number:
       </Typography>
       <Typography typography="h5" sx={styles.mt}>
-        {params.get("jobId")}
+        {searchParams.get("jobId")}
       </Typography>
       <Typography typography="subtitle1" sx={styles.mt}>
         If you have opted to be advised of updates related to this issue, you
@@ -47,7 +54,7 @@ export const AcknowledgementPage: React.FC = () => {
         variant="contained"
         color="primary"
         sx={{ ...styles.mt, ...styles.textDefault }}
-        onClick={() => navigate(RoutesPath.HOME)}
+        onClick={navigateBack}
       >
         Report another issue
       </Button>

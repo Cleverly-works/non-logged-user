@@ -43,6 +43,9 @@ const styles = {
       ? { margin: "auto!important" }
       : { marginLeft: "auto!important" }),
   }),
+  description: {
+    backgroundColor: colors.defaultWhite,
+  },
   notificationsCheckbox: (isWidth425pxOrLess: boolean) => ({
     display: "flex",
     alignItems: "center",
@@ -53,6 +56,7 @@ const styles = {
       : {}),
   }),
   textField: (isWidth425pxOrLess: boolean) => ({
+    height: "80px",
     ...(isWidth425pxOrLess
       ? {
           width: "100%",
@@ -67,16 +71,19 @@ const styles = {
     textTransform: "none",
   },
   issueTypes: {
-    height: "600px",
+    maxHeight: "600px",
     overflow: "auto",
   },
   mr: {
     marginLeft: "3em",
   },
+  userInfoFields: {
+    height: "80px",
+  },
 };
 
 export const HomePage = () => {
-  const predefined = usePredefinedQueryParams();
+  const { predefinedParams } = usePredefinedQueryParams();
 
   const {
     control,
@@ -88,13 +95,12 @@ export const HomePage = () => {
     reset,
   } = useForm({
     defaultValues: {
-      location: predefined?.location.locationForSelect,
-      sublocation: predefined?.sublocation?.sublocationForSelect,
+      location: predefinedParams?.location.locationForSelect,
+      sublocation: predefinedParams?.sublocation?.sublocationForSelect,
+      shouldSendNotifications: false,
     },
     resolver: yupResolver(issueReportValidationSchema),
   });
-
-  console.log(errors);
 
   const [reportIssueData, setReportIssueData] = useState<any | null>(null);
   const [isModalOpen, setisModalOpen] = useState<boolean>(false);
@@ -124,7 +130,7 @@ export const HomePage = () => {
       .catch((e) => {
         enqueueSnackbar({
           variant: "error",
-          message: e.message,
+          message: e.data.message,
         });
       });
   }, [enqueueSnackbar]);
@@ -140,7 +146,7 @@ export const HomePage = () => {
         setLocationsLoading(false);
         enqueueSnackbar({
           variant: "error",
-          message: e.message,
+          message: e.data.message,
         });
       });
   };
@@ -156,7 +162,7 @@ export const HomePage = () => {
         setSublocationsLoading(false);
         enqueueSnackbar({
           variant: "error",
-          message: e.message,
+          message: e.data.message,
         });
       });
   };
@@ -170,7 +176,7 @@ export const HomePage = () => {
     setCreatingReportLoading(true);
     createReportedIssue({
       ...reportIssueData,
-      customerId: predefined?.customer.id,
+      customerId: predefinedParams?.customer.id,
     })
       .then((data) => {
         setCreatingReportLoading(false);
@@ -178,9 +184,10 @@ export const HomePage = () => {
         reset();
       })
       .catch((e) => {
+        console.log("Error", e);
         enqueueSnackbar({
           variant: "error",
-          message: e.message,
+          message: e.data.message,
         });
         setCreatingReportLoading(false);
       });
@@ -214,7 +221,7 @@ export const HomePage = () => {
                   render={({ field: { value, onChange } }) => (
                     <SearchAutocomplete
                       value={value}
-                      disabled={!!predefined?.location.id}
+                      disabled={!!predefinedParams?.location.id}
                       loading={locationsLoading}
                       textFieldProps={{
                         color: "primary",
@@ -229,14 +236,14 @@ export const HomePage = () => {
                     />
                   )}
                 />
-                {locationWatch && predefined?.sublocation && (
+                {locationWatch && predefinedParams?.sublocation && (
                   <Controller
                     name="sublocation"
                     control={control}
                     render={({ field: { value, onChange } }) => (
                       <SearchAutocomplete
                         value={value}
-                        disabled={!!predefined?.sublocation?.id}
+                        disabled={!!predefinedParams?.sublocation?.id}
                         loading={sublocationsLoading}
                         textFieldProps={{
                           color: "primary",
@@ -259,6 +266,7 @@ export const HomePage = () => {
                 <TextField
                   multiline
                   rows={4}
+                  sx={styles.description}
                   {...register("description")}
                   maxRows={4}
                   error={!!errors.description}

@@ -11,6 +11,7 @@ const styles: Record<string, any> = {
     blurred: boolean,
     displayMode: boolean,
   ) => ({
+    backgroundColor: colors.defaultWhite,
     display: "inline-flex",
     flexDirection: "column",
     alignItems: "center",
@@ -21,6 +22,7 @@ const styles: Record<string, any> = {
     ...(!displayMode ? { margin: "10px", padding: "20px" } : {}),
     boxSizing: "border-box",
     opacity: blurred ? 0.5 : 1,
+    borderRadius: "15px",
     ...(isSelected
       ? { border: `1px ${colors.mainBlue} solid`, borderRadius: "15px" }
       : !displayMode && {
