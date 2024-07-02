@@ -29,10 +29,14 @@ export const createReportedIssue = async (
 ): Promise<{ jobId: number }> => {
   const multipartFormData = createIssueDataAdapter(data);
 
+  console.log(multipartFormData.entries());
+
   const { data: response } = await apiClient.post<
     any,
     { data: { jobId: number } }
-  >(homePageUrls.createIssue, multipartFormData);
+  >(homePageUrls.createIssue, multipartFormData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 
   return response;
 };

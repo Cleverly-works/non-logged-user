@@ -4,19 +4,23 @@ export const issueTypesDataAdapter = (issueTypes: any[]) => {
 
 export const createIssueDataAdapter = (data: any) => {
   const form = new FormData();
-  data?.attachments?.forEach(({ media }: any, ndx: number) => {
-    form.append(`file${ndx}`, media);
+
+  console.log(data.attachments);
+
+  data?.attachments?.forEach(({ media }: { media: File }) => {
+    console.log(media);
+    form.append(`attachments`, media);
   });
 
-  form.append("email", data.email);
-  form.append("name", data.name);
-  form.append("phone", data.phone);
-  form.append("issueType", data.issueType.id);
-  form.append("location", data.location.value);
-  form.append("customerId", data.customerId);
-  form.append("sublocation", data.sublocation?.value ?? null);
-  form.append("description", data.description);
-  form.append("shouldSendNotifications", data.shouldSendNotifications);
+  form.set("email", data.email);
+  form.set("name", data.name);
+  form.set("phone", data.phone);
+  form.set("issueType", data.issueType.id);
+  form.set("location", data.location.value);
+  form.set("customerId", data.customerId);
+  form.set("sublocation", data.sublocation?.value ?? null);
+  form.set("description", data.description);
+  form.set("shouldSendNotifications", data.shouldSendNotifications);
 
   return form;
 };
