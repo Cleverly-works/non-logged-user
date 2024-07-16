@@ -1,8 +1,18 @@
-import React from "react";
-import { AppBar, Box, Stack, Typography, useMediaQuery } from "@mui/material";
+import React, { useContext } from "react";
+import {
+  AppBar,
+  Box,
+  Grid,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+
+import cleverlyLogo from "../../../images/cleverly-logo.png";
 
 import { colors } from "../../../const";
-import background from "../../../images/background1.svg";
+import { Stepper } from "../../organisms/stepper/stepper";
+import { mainContext } from "../../../context";
 
 const styles: Record<string, any> = {
   main: {
@@ -11,21 +21,33 @@ const styles: Record<string, any> = {
   body: (isWidth425pxOrLess: boolean) => ({
     padding: isWidth425pxOrLess ? "5px" : "40px",
     height: "100%",
-    backgroundImage: `url('${background}')`,
+    backgroundColor: colors.appBarBackground,
+    color: colors.defaultWhite,
     backgroundRepeat: "no-repeat",
   }),
   appBar: {
-    height: "7rem",
-    padding: "1em 3em",
+    display: "flex",
+    justifyContent: "center",
+    height: "10rem",
+    padding: "0 8em",
+    borderBottom: `1px solid ${colors.separatorBlue}`,
     backgroundColor: colors.appBarBackground,
   },
-  title: {
-    color: colors.mainBlue,
+  subtitle: {
+    color: colors.halfTransparentBlue,
   },
   image: {
     width: "50px",
     height: "50px",
   },
+  footerImage: {
+    width: "200px",
+    height: "44px",
+  },
+  stepper: (isBlurred: boolean) => ({
+    borderRight: `1px solid ${colors.separatorBlue}`,
+    backdropFilter: isBlurred ? "blur(10px)!important" : "none",
+  }),
 };
 
 type MainLayoutProps = {
@@ -34,6 +56,7 @@ type MainLayoutProps = {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const { currentStep } = useContext(mainContext);
 
   return (
     <>
@@ -46,18 +69,34 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           />
           {!isWidth425pxOrLess && (
             <Stack ml={5}>
-              <Typography typography="h5" sx={styles.title}>
-                Welcome to Homyze issue reporting tool brought to you by
-                Cleverly
-              </Typography>
               <Typography typography="h5">
-                Here you can report an issue quickly and easily
+                Welcome to the Homyze issue reporting tool.
+              </Typography>
+              <Typography typography="h6" sx={styles.subtitle}>
+                Brought to you by Cleverly.
               </Typography>
             </Stack>
           )}
         </Stack>
       </AppBar>
-      <Box sx={styles.body(isWidth425pxOrLess)}>{children}</Box>
+      <Box sx={styles.body(isWidth425pxOrLess)}>
+        <Grid container>
+          <Grid item xs={12} md={3} sx={styles.stepper(currentStep > 3)}>
+            <Stack alignItems="center" display="inline-flex" height="100%">
+              <Stepper currentStep={currentStep} />
+              <Stack alignItems="center" mt="6em">
+                <img src={cleverlyLogo} alt="..." style={styles.footerImage} />
+                <Typography typography="subtitle2">
+                  © Cleverly Limited 2024
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={9}>
+            {children}
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
 };

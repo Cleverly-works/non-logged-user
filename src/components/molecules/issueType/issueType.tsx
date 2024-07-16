@@ -11,20 +11,24 @@ const styles: Record<string, any> = {
     blurred: boolean,
     displayMode: boolean,
   ) => ({
-    backgroundColor: colors.defaultWhite,
     display: "inline-flex",
-    flexDirection: "column",
+    flexDirection: displayMode ? "row" : "column",
     alignItems: "center",
     justifyContent: "center",
+    padding: "20px",
     ...(isWidth425pxOrLess
-      ? { width: "120px", height: "120px" }
-      : { width: "180px", height: "180px" }),
+      ? { width: "80px", height: "80px" }
+      : { width: "150px", height: "150px" }),
     ...(!displayMode ? { margin: "10px", padding: "20px" } : {}),
     boxSizing: "border-box",
     opacity: blurred ? 0.5 : 1,
     borderRadius: "15px",
     ...(isSelected
-      ? { border: `1px ${colors.mainBlue} solid`, borderRadius: "15px" }
+      ? {
+          border: `1px ${colors.mainBlue} solid`,
+          borderRadius: "15px",
+          backgroundColor: colors.activeGreen,
+        }
       : !displayMode && {
           ":hover": {
             border: `1px ${colors.mainBlue} solid`,
@@ -34,9 +38,13 @@ const styles: Record<string, any> = {
   }),
   image: (isWidth425pxOrLess: boolean) => ({
     ...(isWidth425pxOrLess
-      ? { width: "80px", height: "80px" }
-      : { width: "120px", height: "120px" }),
+      ? { width: "50px", height: "50px" }
+      : { width: "80px", height: "80px" }),
   }),
+  label: {
+    width: "100px",
+    textAlign: "center",
+  },
 };
 
 type IssueTypeProps = {
@@ -73,7 +81,9 @@ const IssueType: React.FC<IssueTypeProps> = ({
         alt="..."
         style={styles.image(isWidth425pxOrLess)}
       />
-      <Typography typography="subtitle1">{name}</Typography>
+      <Typography typography="subtitle1" sx={styles.label}>
+        {name}
+      </Typography>
     </Box>
   );
 };

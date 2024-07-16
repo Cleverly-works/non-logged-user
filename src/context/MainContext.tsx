@@ -7,12 +7,16 @@ import React, {
 
 interface MainContextParams {
   generalAppParams: string;
+  currentStep: number;
   setGeneralAppParams: Dispatch<SetStateAction<string>>;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 export const MainContext = createContext<MainContextParams>({
   generalAppParams: "",
+  currentStep: 0,
   setGeneralAppParams: () => {},
+  setCurrentStep: () => {},
 });
 
 type MainContextProps = {
@@ -21,9 +25,17 @@ type MainContextProps = {
 
 const MainContextWrapper: React.FC<MainContextProps> = ({ children }) => {
   const [generalAppParams, setGeneralAppParams] = useState<string>("");
+  const [currentStep, setCurrentStep] = useState<number>(0);
 
   return (
-    <MainContext.Provider value={{ generalAppParams, setGeneralAppParams }}>
+    <MainContext.Provider
+      value={{
+        currentStep,
+        generalAppParams,
+        setGeneralAppParams,
+        setCurrentStep,
+      }}
+    >
       {children}
     </MainContext.Provider>
   );

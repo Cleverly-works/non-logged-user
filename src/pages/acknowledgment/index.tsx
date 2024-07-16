@@ -18,10 +18,11 @@ export const AcknowledgementPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { generalAppParams } = useContext(mainContext);
+  const { generalAppParams, setCurrentStep } = useContext(mainContext);
 
   const navigateBack = () => {
     navigate(`${RoutesPath.HOME}?${generalAppParams}`);
+    setCurrentStep(0);
   };
 
   return (

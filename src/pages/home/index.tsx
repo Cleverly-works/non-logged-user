@@ -4,12 +4,12 @@ import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  Button,
-  FormControlLabel,
+  // Button,
+  // FormControlLabel,
   Stack,
   TextField,
   useMediaQuery,
-  Checkbox,
+  // Checkbox,
   Typography,
 } from "@mui/material";
 
@@ -323,7 +323,7 @@ export const HomePage = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <Stack rowGap={2} sx={{ ...styles.stepBox }}>
+            {/* <Stack rowGap={2} sx={{ ...styles.stepBox }}>
               <StepLabel counter={4} text="Your details" />
               <Stack
                 direction="row"
@@ -386,7 +386,7 @@ export const HomePage = () => {
                   />
                 )}
               />
-            </Stack>
+            </Stack> */}
           </Stack>
         </form>
         {isModalOpen && (
