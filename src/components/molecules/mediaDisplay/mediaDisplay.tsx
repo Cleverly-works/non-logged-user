@@ -6,13 +6,18 @@ import { colors } from "../../../const";
 const styles: Record<string, object> = {
   mediaList: {
     width: "inherit",
-    padding: "10px 15px",
+    padding: "10px 0px",
   },
   mediaLinkWrapper: {
+    color: colors.defaultWhite,
     marginRight: "10px",
   },
   mediaLink: {
-    color: colors.mainBlue,
+    width: "100px",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    color: colors.defaultWhite,
     fontWeight: 600,
     pointerEvents: "none",
   },
@@ -36,19 +41,15 @@ const MediaDisplay: React.FC<MediaDisplayProps> = ({
 
   return (
     <Stack direction="row" sx={{ ...styles.mediaList, ...outerSx }}>
-      <Typography typography="subtitle1" mr={1}>
-        Media:&nbsp;
-      </Typography>
-      {slicedMediaList.map(({ caption, media }) => (
+      {slicedMediaList.map((attachment: any, ndx: number) => (
         <a
-          href={URL.createObjectURL(media)}
+          href={URL.createObjectURL(attachment)}
           style={styles.mediaLinkWrapper}
           target="_blank"
           rel="noreferrer"
+          key={ndx}
         >
-          <Typography sx={styles.mediaLink}>
-            {caption || media?.name}
-          </Typography>
+          <Typography sx={styles.mediaLink}>{attachment?.name}</Typography>
         </a>
       ))}
       {slicedMediaList.length !== mediaList.length && (

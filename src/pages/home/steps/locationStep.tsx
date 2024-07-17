@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useState } from "react";
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Stack, Button, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 
@@ -22,10 +22,15 @@ const styles = {
   },
   subtitle: {
     color: colors.halfTransparentBlue,
-    fontSize: "12px",
   },
   input: {
-    borderColor: colors.activeGreen,
+    "& .MuiAutocomplete-input": {
+      color: `${colors.defaultWhite}!important`,
+    },
+    input: { color: `${colors.defaultWhite}!important` },
+    color: `${colors.defaultWhite}!important`,
+
+    borderColor: `${colors.activeGreen}!important`,
   },
   nextButton: {
     backgroundColor: colors.activeGreen,
@@ -45,6 +50,7 @@ export const LocationFormStep: React.FC<StepProps> = ({
 }) => {
   const { control, errors, watch } = formOptions;
   const locationWatch = watch("location");
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
 
   const [locations, setLocations] = useState<any[]>([]);
   const [sublocations, setSublocations] = useState<any[]>([]);
@@ -87,13 +93,20 @@ export const LocationFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Box p={7} height="100%" width="80%" display="inline-block">
+    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        <Typography typography="subtitle1" sx={styles.stepLabel}>
-          Step 1/4
+        {!isWidth425pxOrLess && (
+          <Typography typography="h6" sx={styles.stepLabel}>
+            Step 1/4
+          </Typography>
+        )}
+        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+          Start with the location
         </Typography>
-        <Typography typography="h5">Start with the location</Typography>
-        <Typography typography="subtitle2" sx={styles.subtitle}>
+        <Typography
+          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          sx={styles.subtitle}
+        >
           Please tell us where the issue has occurred using the dropdown below
           if needed
         </Typography>
@@ -108,7 +121,6 @@ export const LocationFormStep: React.FC<StepProps> = ({
               disabled={!!predefinedParams?.location.id}
               loading={locationsLoading}
               textFieldProps={{
-                label: "Select location",
                 error: !!errors.location,
                 helperText: errors.location?.message,
               }}
@@ -130,7 +142,6 @@ export const LocationFormStep: React.FC<StepProps> = ({
                 loading={sublocationsLoading}
                 textFieldProps={{
                   color: "primary",
-                  label: "Select sublocation",
                   error: !!errors.sublocation,
                   helperText: errors.sublocation?.message,
                 }}
@@ -143,7 +154,8 @@ export const LocationFormStep: React.FC<StepProps> = ({
           />
         )}
       </Stack>
-      <Stack direction="row" justifyContent="flex-end" mt="auto">
+
+      <Stack direction="row" justifyContent="flex-end" mt={"auto"}>
         <Button
           onClick={() => setStep(issueReportFormSteps.ISSUE_TYPE)}
           sx={styles.nextButton}
@@ -153,6 +165,6 @@ export const LocationFormStep: React.FC<StepProps> = ({
           Next step
         </Button>
       </Stack>
-    </Box>
+    </Stack>
   );
 };

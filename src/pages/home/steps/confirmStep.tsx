@@ -1,17 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import React from "react";
-import {
-  Box,
-  Typography,
-  Stack,
-  Button,
-  TextField,
-  useMediaQuery,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import { Controller } from "react-hook-form";
+import { Box, Typography, Stack, Button, useMediaQuery } from "@mui/material";
 import { issueReportFormSteps } from ".";
 
 import { MediaDisplay, IssueType } from "../../../components/molecules";
@@ -28,7 +16,6 @@ const styles = {
   },
   subtitle: {
     color: colors.halfTransparentBlue,
-    fontSize: "12px",
   },
   backButton: {
     color: colors.defaultWhite,
@@ -53,30 +40,37 @@ const styles = {
     fontWeight: "700",
     margin: "20px 0",
   },
-  infoItem: {
+  infoItem: (isWidth425pxOrLess: boolean) => ({
+    ...(isWidth425pxOrLess ? { display: "block" } : { flexDirection: "row" }),
     margin: "10px 0px",
     alignItems: "center",
-  },
-  label: {
+  }),
+  label: (isWidth425pxOrLess: boolean) => ({
+    color: isWidth425pxOrLess
+      ? colors.halfTransparentBlue
+      : colors.defaultWhite,
     width: "160px",
     fontWeight: "600",
-  },
-  value: {
-    width: "80%",
-    marginLeft: "50px",
-  },
-  description: {
-    width: "80%",
-    // maxHeight: "150px",
-    marginLeft: "50px",
-  },
+  }),
+  value: (isWidth425pxOrLess: boolean) => ({
+    maxWidth: "300px",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    marginLeft: isWidth425pxOrLess ? "0px" : "50px",
+  }),
 };
 
 export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
   const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
 
   return (
-    <Box p={7} height="100%" width="80%" display="inline-block">
+    <Box
+      p={isWidth425pxOrLess ? 2 : 7}
+      height="100%"
+      width="90%"
+      display="inline-block"
+    >
       <Stack spacing={1}>
         <Typography typography="h5">
           Please check the information entered is correct
@@ -86,71 +80,99 @@ export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
         </Typography>
       </Stack>
 
-      <Stack direction="row" sx={styles.infoItem}>
-        <Typography typography="subtile1" sx={styles.label}>
+      <Stack
+        direction={isWidth425pxOrLess ? "column" : "row"}
+        sx={styles.infoItem(isWidth425pxOrLess)}
+      >
+        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
           Your location:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value}>
+        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
           {formData.location.label}
         </Typography>
       </Stack>
       {formData.sublocation && (
-        <Stack direction="row" sx={styles.infoItem}>
-          <Typography typography="subtile1" sx={styles.label}>
+        <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+          <Typography
+            typography="subtile1"
+            sx={styles.label(isWidth425pxOrLess)}
+          >
             Your sublocation:&nbsp;
           </Typography>
-          <Typography typography="subtile2" sx={styles.value}>
+          <Typography
+            typography="subtile2"
+            sx={styles.value(isWidth425pxOrLess)}
+          >
             {formData.sublocation.label}
           </Typography>
         </Stack>
       )}
-      <Stack direction="row" sx={styles.infoItem}>
+      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
         <Typography
           typography="subtile1"
           sx={{
-            ...styles.label,
-            width: isWidth425pxOrLess ? "130px" : "160px",
+            ...styles.label(isWidth425pxOrLess),
           }}
         >
           Relevant issue:&nbsp;
         </Typography>
-        <IssueType {...formData.issueType} displayMode />
+        <Box ml={isWidth425pxOrLess ? 0 : 3}>
+          <IssueType {...formData.issueType} displayMode />
+        </Box>
       </Stack>
-      <Stack direction="row" sx={styles.infoItem}>
-        <Typography typography="subtile1" sx={styles.label}>
+      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
           Description:&nbsp;
         </Typography>
         <Stack>
-          <Typography typography="subtile2" sx={styles.value}>
+          <Typography
+            typography="subtile2"
+            sx={{
+              ...styles.value(isWidth425pxOrLess),
+              // height: isWidth425pxOrLess ? "200px" : "auto",
+            }}
+          >
             {formData.description}
           </Typography>
-          <MediaDisplay mediaList={formData.attachments} />
         </Stack>
       </Stack>
+      {formData.attachments?.length && (
+        <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+          <Typography
+            typography="subtile1"
+            sx={styles.label(isWidth425pxOrLess)}
+          >
+            Media:&nbsp;
+          </Typography>
+          <Box sx={styles.value(isWidth425pxOrLess)}>
+            <MediaDisplay mediaList={formData.attachments} />
+          </Box>
+        </Stack>
+      )}
       <Typography typography="h4" sx={styles.contactInformationTitle}>
         Contact information
       </Typography>
-      <Stack direction="row" sx={styles.infoItem}>
-        <Typography typography="subtile1" sx={styles.label}>
+      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
           Your name:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value}>
+        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
           {formData.name}
         </Typography>
       </Stack>
-      <Stack direction="row" sx={styles.infoItem}>
-        <Typography typography="subtile1" sx={styles.label}>
+      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
           Email:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value}>
+        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
           {formData.email}
         </Typography>
       </Stack>
-      <Stack direction="row" sx={styles.infoItem}>
-        <Typography typography="subtile1" sx={styles.label}>
+      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
           Number:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value}>
+        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
           {formData.phone}
         </Typography>
       </Stack>

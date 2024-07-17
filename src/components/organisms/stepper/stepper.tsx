@@ -5,7 +5,7 @@ import { StepConnector } from "./components/stepConnector";
 import { StepIcon } from "./components/stepIcon";
 import { colors } from "../../../const";
 
-const styles: Record<string, object> = {
+const styles: Record<string, any> = {
   wrapper: {
     maxWidth: 400,
     height: "100%",
@@ -16,15 +16,17 @@ const styles: Record<string, object> = {
     color: colors.activeGreen,
     marginBottom: "30px",
   },
-  stepLabel: {
+  stepLabel: (isActive: boolean) => ({
     [`& .${stepLabelClasses.label}`]: {
-      color: `${colors.defaultWhite}!important`,
+      color: isActive
+        ? `${colors.defaultWhite}!important`
+        : `${colors.halfTransparentBlue}!important`,
       marginLeft: "15px",
       fontSize: "18px",
       fontWeight: "600",
     },
     padding: "0!important",
-  },
+  }),
 };
 
 const steps = [
@@ -46,7 +48,7 @@ type StepperProps = {
   currentStep: number;
 };
 
-export function Stepper({ currentStep }: StepperProps) {
+function Stepper({ currentStep }: StepperProps) {
   return (
     <Box sx={styles.wrapper}>
       <Typography typography="h6" sx={styles.label}>
@@ -57,9 +59,12 @@ export function Stepper({ currentStep }: StepperProps) {
         connector={<StepConnector />}
         orientation="vertical"
       >
-        {steps.map(({ label }) => (
+        {steps.map(({ label }, ndx) => (
           <Step key={label}>
-            <StepLabel sx={styles.stepLabel} StepIconComponent={StepIcon}>
+            <StepLabel
+              sx={styles.stepLabel(currentStep >= ndx)}
+              StepIconComponent={StepIcon}
+            >
               {label}
             </StepLabel>
           </Step>
@@ -68,3 +73,5 @@ export function Stepper({ currentStep }: StepperProps) {
     </Box>
   );
 }
+
+export default Stepper;

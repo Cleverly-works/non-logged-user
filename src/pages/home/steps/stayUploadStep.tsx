@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import React from "react";
 import {
-  Box,
   Typography,
   Stack,
   Button,
-  TextField,
   useMediaQuery,
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
+import { TextField } from "../../../components/atoms";
 import { Controller } from "react-hook-form";
 import { issueReportFormSteps } from ".";
 import { colors } from "../../../const";
@@ -26,7 +23,6 @@ const styles = {
   },
   subtitle: {
     color: colors.halfTransparentBlue,
-    fontSize: "12px",
   },
   backButton: {
     color: colors.defaultWhite,
@@ -69,26 +65,31 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
   formOptions,
   setStep,
 }) => {
-  const { register, errors, control, watch, trigger } = formOptions;
+  const { register, errors, control, trigger } = formOptions;
 
   const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
 
   const hasError = errors.name || errors.phone || errors.email;
-
-  const emptyData = !watch("name") || !watch("email") || !watch("phone");
 
   const handleValidate = async () => {
     await trigger(["name", "email", "phone"]);
   };
 
   return (
-    <Box p={7} height="100%" width="80%" display="inline-block">
+    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        <Typography typography="subtitle1" sx={styles.stepLabel}>
-          Step 4/4
+        {!isWidth425pxOrLess && (
+          <Typography typography="h6" sx={styles.stepLabel}>
+            Step 4/4
+          </Typography>
+        )}
+        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+          Stay in the loop
         </Typography>
-        <Typography typography="h5">Stay in the loop</Typography>
-        <Typography typography="subtitle2" sx={styles.subtitle}>
+        <Typography
+          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          sx={styles.subtitle}
+        >
           Please add some personal details
         </Typography>
       </Stack>
@@ -97,7 +98,7 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
         alignItems="center"
         marginTop={2}
         marginBottom={2}
-        rowGap={3}
+        rowGap={isWidth425pxOrLess ? 0 : 3}
         flexWrap="wrap"
       >
         <TextField
@@ -109,7 +110,7 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
           helperText={errors.name?.message}
         />
         <Stack
-          direction="row"
+          direction={isWidth425pxOrLess ? "column" : "row"}
           columnGap={3}
           justifyContent="space-between"
           width="100%"
@@ -142,6 +143,7 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
                 <Checkbox
                   checked={value}
                   color="primary"
+                  sx={{ color: "#fff" }}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onChange(e.target?.checked)
                   }
@@ -162,16 +164,19 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
         </Button>
         <Button
           onClick={() => {
-            handleValidate().then(() => setStep(issueReportFormSteps.CONFIRM));
+            handleValidate().then(() => {
+              if (!hasError) {
+                setStep(issueReportFormSteps.CONFIRM);
+              }
+            });
           }}
           sx={styles.nextButton}
           size="large"
-          disabled={hasError || emptyData}
           variant="contained"
         >
           Next step
         </Button>
       </Stack>
-    </Box>
+    </Stack>
   );
 };

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React from "react";
-import { Box, Typography, Stack, Button, TextField } from "@mui/material";
+import { Box, Typography, Stack, Button, useMediaQuery } from "@mui/material";
+import { TextField } from "../../../components/atoms";
 import { issueReportFormSteps } from ".";
 import { MediaSelector } from "../../../components/organisms";
 import { colors } from "../../../const";
@@ -17,7 +18,6 @@ const styles = {
   },
   subtitle: {
     color: colors.halfTransparentBlue,
-    fontSize: "12px",
   },
   backButton: {
     color: colors.defaultWhite,
@@ -38,21 +38,22 @@ const styles = {
       opacity: 0.8,
     },
   },
-  description: {
-    border: `1px solid ${colors.activeGreen}`,
-    color: colors.defaultWhite,
-    "& .css-127vtyk-MuiInputBase-root-MuiOutlinedInput-root": {
-      color: `${colors.defaultWhite}!important`,
-      border: "none!important",
-    },
+  description: (isWidth425pxOrLess: boolean) => ({
     width: "100%",
-    height: "150px",
+    height: isWidth425pxOrLess ? "300px" : "150px",
     borderRadius: "20px",
     margin: "20px 10px",
-    "&:hover": {
-      border: `1px solid ${colors.activeGreen}`,
-    },
-  },
+    ...(isWidth425pxOrLess
+      ? {
+          "& .MuiInputBase-root": {
+            height: "300px",
+          },
+          textarea: {
+            height: "280px!important",
+          },
+        }
+      : {}),
+  }),
 };
 
 export const DetailsFormStep: React.FC<StepProps> = ({
@@ -60,6 +61,7 @@ export const DetailsFormStep: React.FC<StepProps> = ({
   setStep,
 }) => {
   const { register, errors, watch, setValue, trigger } = formOptions;
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
 
   const mediaFilesWatch = watch("attachments") || [];
   const descriptionWatch = watch("description");
@@ -69,13 +71,20 @@ export const DetailsFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Box p={7} height="100%" width="80%" display="inline-block">
+    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        <Typography typography="subtitle1" sx={styles.stepLabel}>
-          Step 3/4
+        {!isWidth425pxOrLess && (
+          <Typography typography="h6" sx={styles.stepLabel}>
+            Step 3/4
+          </Typography>
+        )}
+        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+          Provide details
         </Typography>
-        <Typography typography="h5">Provide details</Typography>
-        <Typography typography="subtitle2" sx={styles.subtitle}>
+        <Typography
+          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          sx={styles.subtitle}
+        >
           Please provide a brief description of the issue and upload a photo if
           available (and relevant):
         </Typography>
@@ -83,9 +92,8 @@ export const DetailsFormStep: React.FC<StepProps> = ({
       <TextField
         multiline
         rows={4}
-        sx={styles.description}
+        sx={styles.description(isWidth425pxOrLess)}
         {...register("description")}
-        maxRows={4}
         error={!!errors.description}
         helperText={errors.description?.message}
       />
@@ -101,18 +109,19 @@ export const DetailsFormStep: React.FC<StepProps> = ({
         </Button>
         <Button
           onClick={() => {
-            handleValidate().then(() =>
-              setStep(issueReportFormSteps.STAY_UPLOAD),
-            );
+            handleValidate().then(() => {
+              if (descriptionWatch || mediaFilesWatch?.length) {
+                setStep(issueReportFormSteps.STAY_UPLOAD);
+              }
+            });
           }}
           sx={styles.nextButton}
-          disabled={!descriptionWatch && !mediaFilesWatch?.length}
           size="large"
           variant="contained"
         >
           Next step
         </Button>
       </Stack>
-    </Box>
+    </Stack>
   );
 };

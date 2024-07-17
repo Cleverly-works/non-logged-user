@@ -11,7 +11,7 @@ import {
 import cleverlyLogo from "../../../images/cleverly-logo.png";
 
 import { colors } from "../../../const";
-import { Stepper } from "../../organisms/stepper/stepper";
+import { MobileStepper, Stepper } from "../../organisms";
 import { mainContext } from "../../../context";
 
 const styles: Record<string, any> = {
@@ -46,7 +46,7 @@ const styles: Record<string, any> = {
   },
   stepper: (isBlurred: boolean) => ({
     borderRight: `1px solid ${colors.separatorBlue}`,
-    backdropFilter: isBlurred ? "blur(10px)!important" : "none",
+    backdropFilter: isBlurred ? "blur(3px)!important" : "none",
   }),
 };
 
@@ -60,14 +60,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <>
-      <AppBar position="static" sx={styles.appBar}>
-        <Stack direction="row" alignItems="center" rowGap={2}>
-          <img
-            src={require("../../../images/icon-white.png")}
-            style={styles.image}
-            alt="..."
-          />
-          {!isWidth425pxOrLess && (
+      {!isWidth425pxOrLess && (
+        <AppBar position="static" sx={styles.appBar}>
+          <Stack direction="row" alignItems="center" rowGap={2}>
+            <img
+              src={require("../../../images/icon-white.png")}
+              style={styles.image}
+              alt="..."
+            />
             <Stack ml={5}>
               <Typography typography="h5">
                 Welcome to the Homyze issue reporting tool.
@@ -76,23 +76,50 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 Brought to you by Cleverly.
               </Typography>
             </Stack>
-          )}
-        </Stack>
-      </AppBar>
+          </Stack>
+        </AppBar>
+      )}
       <Box sx={styles.body(isWidth425pxOrLess)}>
-        <Grid container>
-          <Grid item xs={12} md={3} sx={styles.stepper(currentStep > 3)}>
-            <Stack alignItems="center" display="inline-flex" height="100%">
-              <Stepper currentStep={currentStep} />
-              <Stack alignItems="center" mt="6em">
-                <img src={cleverlyLogo} alt="..." style={styles.footerImage} />
-                <Typography typography="subtitle2">
-                  © Cleverly Limited 2024
-                </Typography>
-              </Stack>
+        <Grid container height="86%">
+          <Grid
+            item
+            xs={12}
+            md={3}
+            sx={styles.stepper(currentStep > 3)}
+            minHeight="100px"
+          >
+            <Stack
+              alignItems="center"
+              display="inline-flex"
+              height="100%"
+              width="100%"
+            >
+              {isWidth425pxOrLess ? (
+                <MobileStepper maxSteps={4} />
+              ) : (
+                <>
+                  <Stepper currentStep={currentStep} />
+                  <Stack alignItems="center" mt="6em">
+                    <a
+                      href="https://www.cleverly.works/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img
+                        src={cleverlyLogo}
+                        alt="..."
+                        style={styles.footerImage}
+                      />
+                    </a>
+                    <Typography typography="subtitle2">
+                      © Cleverly Limited 2024
+                    </Typography>
+                  </Stack>
+                </>
+              )}
             </Stack>
           </Grid>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={9} height="100%">
             {children}
           </Grid>
         </Grid>

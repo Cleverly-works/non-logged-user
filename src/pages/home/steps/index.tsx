@@ -135,5 +135,13 @@ export const IssueReportForm = () => {
       break;
   }
 
-  return <form onSubmit={handleSubmit(onSubmit)}>{formStep}</form>;
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+      style={{ height: "90%" }}
+    >
+      {formStep}
+    </form>
+  );
 };

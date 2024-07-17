@@ -5,8 +5,9 @@ import {
   CircularProgress,
   Autocomplete as MuiAutocomplete,
   SxProps,
-  TextField,
 } from "@mui/material";
+
+import { TextField } from "../../atoms";
 
 type SearchAutocompleteProps = {
   multiple?: boolean;

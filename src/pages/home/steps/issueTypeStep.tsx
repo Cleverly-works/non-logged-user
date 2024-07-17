@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Stack, Button, useMediaQuery } from "@mui/material";
 import { issueReportFormSteps } from ".";
 import { IssueType } from "../../../components/molecules";
 import { colors } from "../../../const";
@@ -19,7 +19,6 @@ const styles = {
   },
   subtitle: {
     color: colors.halfTransparentBlue,
-    fontSize: "12px",
   },
   backButton: {
     color: colors.defaultWhite,
@@ -41,7 +40,7 @@ const styles = {
     },
   },
   issueTypes: {
-    maxHeight: "600px",
+    maxHeight: "500px",
     overflow: "auto",
   },
   errorText: {
@@ -57,6 +56,7 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
   const issueTypeWatch = watch("issueType");
   const [issueTypes, setIssueTypes] = useState<any[]>([]);
   const { enqueueSnackbar } = useSnackbar();
+  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
 
   useEffect(() => {
     getIssueTypes()
@@ -76,24 +76,30 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Box p={7} height="100%" width="80%" display="inline-block">
+    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        <Typography typography="subtitle1" sx={styles.stepLabel}>
-          Step 2/4
+        {!isWidth425pxOrLess && (
+          <Typography typography="h6" sx={styles.stepLabel}>
+            Step 2/4
+          </Typography>
+        )}
+        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+          Describe the issue
         </Typography>
-        <Typography typography="h5">Describe the issue</Typography>
-        <Typography typography="subtitle2" sx={styles.subtitle}>
+        <Typography
+          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          sx={styles.subtitle}
+        >
           Choose from the issue types below and provide some information and
           photos if possible
         </Typography>
       </Stack>
       <Stack
         direction="row"
-        justifyContent="space-between"
-        alignItems="flex-start"
+        justifyContent="flex-start"
+        alignItems="center"
         flexWrap="wrap"
         sx={styles.issueTypes}
-        m={3}
       >
         {issueTypes.map((props) => (
           <IssueType
@@ -111,7 +117,12 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
           </Typography>
         )}
       </Stack>
-      <Stack direction="row" justifyContent="flex-end" mt="auto" columnGap={2}>
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        columnGap={2}
+        mt={"auto"}
+      >
         <Button
           onClick={() => setStep(issueReportFormSteps.LOCATION)}
           sx={styles.backButton}
@@ -123,17 +134,18 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
         <Button
           onClick={() => {
             handleValidate().then(() => {
-              setStep(issueReportFormSteps.DETAILS);
+              if (!errors.issueType) {
+                setStep(issueReportFormSteps.DETAILS);
+              }
             });
           }}
           sx={styles.nextButton}
           size="large"
           variant="contained"
-          disabled={errors.issueType || !issueTypeWatch}
         >
           Next step
         </Button>
       </Stack>
-    </Box>
+    </Stack>
   );
 };

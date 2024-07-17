@@ -8,4 +8,5 @@ export const colors: Record<string, string> = {
   defaultBlack: "#3D3D3D",
   errorRed: "#FF6060",
   activeGreen: "#00CC8C",
+  paleBlue: "#8687A8",
 };

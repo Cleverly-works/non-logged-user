@@ -1,8 +1,12 @@
 * {
   font-family: "Nunito";
+  outline: "none!important";
 }
 
+html,
 body {
+  width: 100%;
+  height: 90%;
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -12,5 +16,12 @@ body {
 }
 
 #root {
-  height: 80vh;
+  height: 100%;
+}
+
+@media (max-width: 425px) {
+  html,
+  body {
+    height: calc(95vh + 20px);
+  }
 }

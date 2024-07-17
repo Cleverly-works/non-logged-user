@@ -1,13 +1,7 @@
 import * as yup from "yup";
 
 export const issueReportValidationSchema = yup.object().shape({
-  attachments: yup.array(
-    yup.object().shape({
-      caption: yup.string(),
-      type: yup.string(),
-      media: yup.mixed(),
-    }),
-  ),
+  attachments: yup.array(),
   issueType: yup
     .object()
     .shape({
