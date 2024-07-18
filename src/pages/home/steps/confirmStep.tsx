@@ -129,14 +129,13 @@ export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
             typography="subtile2"
             sx={{
               ...styles.value(isWidth425pxOrLess),
-              // height: isWidth425pxOrLess ? "200px" : "auto",
             }}
           >
             {formData.description}
           </Typography>
         </Stack>
       </Stack>
-      {formData.attachments?.length && (
+      {!!formData.attachments?.length && (
         <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
           <Typography
             typography="subtile1"

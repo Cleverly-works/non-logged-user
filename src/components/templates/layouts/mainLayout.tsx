@@ -119,7 +119,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               )}
             </Stack>
           </Grid>
-          <Grid item xs={12} md={9} height="100%">
+          <Grid item xs={12} md={9} height="inherit">
             {children}
           </Grid>
         </Grid>

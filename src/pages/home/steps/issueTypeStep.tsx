@@ -134,7 +134,7 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
         <Button
           onClick={() => {
             handleValidate().then(() => {
-              if (!errors.issueType) {
+              if (issueTypeWatch && !errors.issueType) {
                 setStep(issueReportFormSteps.DETAILS);
               }
             });
