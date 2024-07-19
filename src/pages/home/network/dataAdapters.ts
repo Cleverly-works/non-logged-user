@@ -5,11 +5,8 @@ export const issueTypesDataAdapter = (issueTypes: any[]) => {
 export const createIssueDataAdapter = (data: any) => {
   const form = new FormData();
 
-  console.log(data.attachments);
-
-  data?.attachments?.forEach(({ media }: { media: File }) => {
-    console.log(media);
-    form.append(`attachments`, media);
+  data?.attachments?.forEach((attachment: File) => {
+    form.append(`attachments`, attachment);
   });
 
   form.set("email", data.email);
