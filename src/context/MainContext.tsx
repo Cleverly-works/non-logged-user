@@ -8,13 +8,17 @@ import React, {
 interface MainContextParams {
   generalAppParams: string;
   currentStep: number;
+  hasShowedWelcomeMobiledScreen: boolean;
+  setHasShowedWelcomeMobileScreen: Dispatch<SetStateAction<boolean>>;
   setGeneralAppParams: Dispatch<SetStateAction<string>>;
   setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 export const MainContext = createContext<MainContextParams>({
   generalAppParams: "",
-  currentStep: 0,
+  currentStep: -1,
+  hasShowedWelcomeMobiledScreen: false,
+  setHasShowedWelcomeMobileScreen: () => {},
   setGeneralAppParams: () => {},
   setCurrentStep: () => {},
 });
@@ -25,15 +29,19 @@ type MainContextProps = {
 
 const MainContextWrapper: React.FC<MainContextProps> = ({ children }) => {
   const [generalAppParams, setGeneralAppParams] = useState<string>("");
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<number>(-1);
+  const [hasShowedWelcomeMobiledScreen, setHasShowedWelcomeMobileScreen] =
+    useState<boolean>(false);
 
   return (
     <MainContext.Provider
       value={{
         currentStep,
         generalAppParams,
+        hasShowedWelcomeMobiledScreen,
         setGeneralAppParams,
         setCurrentStep,
+        setHasShowedWelcomeMobileScreen,
       }}
     >
       {children}

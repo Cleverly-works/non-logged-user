@@ -50,10 +50,10 @@ const styles = {
     width: "100%",
     height: "80px",
   },
-  notificationsCheckbox: (isWidth425pxOrLess: boolean) => ({
+  notificationsCheckbox: (isWidth450pxOrLess: boolean) => ({
     display: "flex",
     alignItems: "center",
-    ...(isWidth425pxOrLess
+    ...(isWidth450pxOrLess
       ? {
           margin: "20px",
         }
@@ -65,29 +65,33 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
   formOptions,
   setStep,
 }) => {
-  const { register, errors, control, trigger } = formOptions;
+  const { register, errors, control, trigger, watch } = formOptions;
 
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
-  const hasError = errors.name || errors.phone || errors.email;
+  const nameWatch = watch("name");
+  const phoneWatch = watch("phone");
+  const emailWatch = watch("email");
+
+  const hasError = !!errors.name || !!errors.phone || !!errors.email;
 
   const handleValidate = async () => {
-    await trigger(["name", "email", "phone"]);
+    return trigger(["name", "email", "phone"]);
   };
 
   return (
-    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
+    <Stack p={isWidth450pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        {!isWidth425pxOrLess && (
+        {!isWidth450pxOrLess && (
           <Typography typography="h6" sx={styles.stepLabel}>
             Step 4/4
           </Typography>
         )}
-        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+        <Typography typography={isWidth450pxOrLess ? "h4" : "h5"}>
           Stay in the loop
         </Typography>
         <Typography
-          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          typography={isWidth450pxOrLess ? "subtitle1" : "subtitle2"}
           sx={styles.subtitle}
         >
           Please add some personal details
@@ -98,7 +102,7 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
         alignItems="center"
         marginTop={2}
         marginBottom={2}
-        rowGap={isWidth425pxOrLess ? 0 : 3}
+        rowGap={isWidth450pxOrLess ? 1 : 3}
         flexWrap="wrap"
       >
         <TextField
@@ -110,7 +114,7 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
           helperText={errors.name?.message}
         />
         <Stack
-          direction={isWidth425pxOrLess ? "column" : "row"}
+          direction={isWidth450pxOrLess ? "column" : "row"}
           columnGap={3}
           justifyContent="space-between"
           width="100%"
@@ -137,7 +141,7 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
           name="shouldSendNotifications"
           render={({ field: { value, onChange } }) => (
             <FormControlLabel
-              sx={styles.notificationsCheckbox(isWidth425pxOrLess)}
+              sx={styles.notificationsCheckbox(isWidth450pxOrLess)}
               label="Please check this box if you would like to be notified regarding updates to this issue such as attendance time (if appropriate)"
               control={
                 <Checkbox
@@ -153,7 +157,13 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
           )}
         />
       </Stack>
-      <Stack direction="row" justifyContent="flex-end" columnGap={2} mt="auto">
+      <Stack
+        direction="row"
+        justifyContent={isWidth450pxOrLess ? "flex-start" : "flex-end"}
+        ml={isWidth450pxOrLess ? 2 : 0}
+        columnGap={2}
+        mt="auto"
+      >
         <Button
           onClick={() => setStep(issueReportFormSteps.DETAILS)}
           sx={styles.backButton}
@@ -164,8 +174,9 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
         </Button>
         <Button
           onClick={() => {
-            handleValidate().then(() => {
-              if (!hasError) {
+            handleValidate().then((data) => {
+              console.log(data);
+              if (nameWatch && phoneWatch && emailWatch && !hasError) {
                 setStep(issueReportFormSteps.CONFIRM);
               }
             });

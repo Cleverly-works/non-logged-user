@@ -39,7 +39,7 @@ const styles: Record<string, object> = {
 export const AcknowledgementPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   const { generalAppParams, setCurrentStep } = useContext(mainContext);
 
@@ -49,18 +49,18 @@ export const AcknowledgementPage: React.FC = () => {
   };
 
   return (
-    <Box p={4}>
-      {!isWidth425pxOrLess && (
+    <Box p={isWidth450pxOrLess ? 2 : 4}>
+      {!isWidth450pxOrLess && (
         <Typography typography="h4">Thank you!</Typography>
       )}
       <Typography
-        typography={isWidth425pxOrLess ? "h6" : "subtitle1"}
+        typography={isWidth450pxOrLess ? "h6" : "subtitle1"}
         sx={styles.subtitle}
       >
         We appreciate you taking the time to report this issue.
       </Typography>
       <Typography
-        typography={isWidth425pxOrLess ? "h6" : "subtitle1"}
+        typography={isWidth450pxOrLess ? "h6" : "subtitle1"}
         sx={styles.subtitle}
       >
         This is very helpful in helping us maintain our sites and facilities so

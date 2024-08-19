@@ -19,9 +19,9 @@ body {
   height: 100%;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 450px) {
   html,
   body {
-    height: calc(95vh + 20px);
+    height: calc(100% - 5px);
   }
 }

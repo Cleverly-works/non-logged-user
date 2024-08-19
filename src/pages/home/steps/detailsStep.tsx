@@ -38,18 +38,18 @@ const styles = {
       opacity: 0.8,
     },
   },
-  description: (isWidth425pxOrLess: boolean) => ({
+  description: (isWidth450pxOrLess: boolean) => ({
     width: "100%",
-    height: isWidth425pxOrLess ? "300px" : "150px",
+    height: isWidth450pxOrLess ? "300px" : "150px",
     borderRadius: "20px",
     margin: "20px 10px",
-    ...(isWidth425pxOrLess
+    ...(isWidth450pxOrLess
       ? {
           "& .MuiInputBase-root": {
-            height: "300px",
+            height: "280px",
           },
           textarea: {
-            height: "280px!important",
+            height: "260px!important",
           },
         }
       : {}),
@@ -61,7 +61,7 @@ export const DetailsFormStep: React.FC<StepProps> = ({
   setStep,
 }) => {
   const { register, errors, watch, setValue, trigger } = formOptions;
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   const mediaFilesWatch = watch("attachments") || [];
   const descriptionWatch = watch("description");
@@ -71,18 +71,18 @@ export const DetailsFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
+    <Stack p={isWidth450pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        {!isWidth425pxOrLess && (
+        {!isWidth450pxOrLess && (
           <Typography typography="h6" sx={styles.stepLabel}>
             Step 3/4
           </Typography>
         )}
-        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+        <Typography typography={isWidth450pxOrLess ? "h4" : "h5"}>
           Provide details
         </Typography>
         <Typography
-          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          typography={isWidth450pxOrLess ? "subtitle1" : "subtitle2"}
           sx={styles.subtitle}
         >
           Please provide a brief description of the issue and upload a photo if
@@ -92,13 +92,21 @@ export const DetailsFormStep: React.FC<StepProps> = ({
       <TextField
         multiline
         rows={4}
-        sx={styles.description(isWidth425pxOrLess)}
+        sx={styles.description(isWidth450pxOrLess)}
         {...register("description")}
         error={!!errors.description}
         helperText={errors.description?.message}
       />
-      <MediaSelector values={mediaFilesWatch} setValue={setValue as any} />
-      <Stack direction="row" justifyContent="flex-end" columnGap={2} mt="auto">
+      <Box ml={2}>
+        <MediaSelector values={mediaFilesWatch} setValue={setValue as any} />
+      </Box>
+      <Stack
+        direction="row"
+        justifyContent={isWidth450pxOrLess ? "flex-start" : "flex-end"}
+        ml={isWidth450pxOrLess ? 2 : 0}
+        columnGap={2}
+        mt="auto"
+      >
         <Button
           onClick={() => setStep(issueReportFormSteps.ISSUE_TYPE)}
           sx={styles.backButton}

@@ -17,6 +17,7 @@ import { ConfirmFormStep } from "./confirmStep";
 import { useNavigate } from "react-router-dom";
 import { createReportedIssue } from "../network/services";
 import { RoutesPath } from "../../../routing/routes";
+import { useMediaQuery } from "@mui/material";
 
 enum IssueReportFormStepNames {
   LOCATION = "LOCATION",
@@ -35,13 +36,15 @@ export const issueReportFormSteps: Record<IssueReportFormStepNames, number> = {
 };
 
 export const IssueReportForm = () => {
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
   const [step, setStep] = useState(issueReportFormSteps.LOCATION);
   const [creatingReportLoading, setCreatingReportLoading] =
     useState<boolean>(false);
-  const { setCurrentStep } = useContext(mainContext);
+  const { setCurrentStep, hasShowedWelcomeMobiledScreen } =
+    useContext(mainContext);
   const { enqueueSnackbar } = useSnackbar();
 
-  const { predefinedParams } = usePredefinedQueryParams();
+  const { predefinedParams, rawStringParams } = usePredefinedQueryParams();
 
   const {
     control,
@@ -99,6 +102,10 @@ export const IssueReportForm = () => {
         setCreatingReportLoading(false);
       });
   };
+
+  if (isWidth450pxOrLess && !hasShowedWelcomeMobiledScreen) {
+    navigate(`${RoutesPath.WELCOME_MOBILE}/?${rawStringParams}`);
+  }
 
   let formStep: React.ReactNode | null = null;
 

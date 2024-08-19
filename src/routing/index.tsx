@@ -6,8 +6,10 @@ import { AcknowledgementPage } from "../pages/acknowledgment";
 
 import { RoutesPath } from "./routes";
 import { ErrorPage } from "../pages/error";
+import { WelcomeMobilePage } from "../pages/welcomeMobilePage";
 
 const router = createBrowserRouter([
+  { path: RoutesPath.WELCOME_MOBILE, element: <WelcomeMobilePage /> },
   { path: RoutesPath.HOME, element: <IssueReportForm /> },
   { path: RoutesPath.ACKNOWLEDGMENT, element: <AcknowledgementPage /> },
   { path: RoutesPath.ERROR, element: <ErrorPage /> },

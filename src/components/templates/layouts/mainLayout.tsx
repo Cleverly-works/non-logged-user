@@ -18,8 +18,8 @@ const styles: Record<string, any> = {
   main: {
     height: "95vh",
   },
-  body: (isWidth425pxOrLess: boolean) => ({
-    padding: isWidth425pxOrLess ? "5px" : "40px",
+  body: (isWidth450pxOrLess: boolean) => ({
+    padding: isWidth450pxOrLess ? "5px" : "40px",
     height: "100%",
     backgroundColor: colors.appBarBackground,
     color: colors.defaultWhite,
@@ -55,12 +55,12 @@ type MainLayoutProps = {
 };
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
   const { currentStep } = useContext(mainContext);
 
   return (
     <>
-      {!isWidth425pxOrLess && (
+      {!isWidth450pxOrLess && (
         <AppBar position="static" sx={styles.appBar}>
           <Stack direction="row" alignItems="center" rowGap={2}>
             <img
@@ -79,7 +79,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </Stack>
         </AppBar>
       )}
-      <Box sx={styles.body(isWidth425pxOrLess)}>
+      <Box sx={styles.body(isWidth450pxOrLess)}>
         <Grid container height="86%">
           <Grid
             item
@@ -94,7 +94,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               height="100%"
               width="100%"
             >
-              {isWidth425pxOrLess ? (
+              {isWidth450pxOrLess ? (
                 <MobileStepper maxSteps={4} />
               ) : (
                 <>

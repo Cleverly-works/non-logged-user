@@ -40,33 +40,33 @@ const styles = {
     fontWeight: "700",
     margin: "20px 0",
   },
-  infoItem: (isWidth425pxOrLess: boolean) => ({
-    ...(isWidth425pxOrLess ? { display: "block" } : { flexDirection: "row" }),
+  infoItem: (isWidth450pxOrLess: boolean) => ({
+    ...(isWidth450pxOrLess ? { display: "block" } : { flexDirection: "row" }),
     margin: "10px 0px",
     alignItems: "center",
   }),
-  label: (isWidth425pxOrLess: boolean) => ({
-    color: isWidth425pxOrLess
+  label: (isWidth450pxOrLess: boolean) => ({
+    color: isWidth450pxOrLess
       ? colors.halfTransparentBlue
       : colors.defaultWhite,
     width: "160px",
     fontWeight: "600",
   }),
-  value: (isWidth425pxOrLess: boolean) => ({
+  value: (isWidth450pxOrLess: boolean) => ({
     maxWidth: "300px",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     overflow: "hidden",
-    marginLeft: isWidth425pxOrLess ? "0px" : "50px",
+    marginLeft: isWidth450pxOrLess ? "0px" : "50px",
   }),
 };
 
 export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   return (
     <Box
-      p={isWidth425pxOrLess ? 2 : 7}
+      p={isWidth450pxOrLess ? 2 : 7}
       height="100%"
       width="90%"
       display="inline-block"
@@ -81,54 +81,54 @@ export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
       </Stack>
 
       <Stack
-        direction={isWidth425pxOrLess ? "column" : "row"}
-        sx={styles.infoItem(isWidth425pxOrLess)}
+        direction={isWidth450pxOrLess ? "column" : "row"}
+        sx={styles.infoItem(isWidth450pxOrLess)}
       >
-        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth450pxOrLess)}>
           Your location:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
+        <Typography typography="subtile2" sx={styles.value(isWidth450pxOrLess)}>
           {formData.location.label}
         </Typography>
       </Stack>
       {formData.sublocation && (
-        <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+        <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
           <Typography
             typography="subtile1"
-            sx={styles.label(isWidth425pxOrLess)}
+            sx={styles.label(isWidth450pxOrLess)}
           >
             Your sublocation:&nbsp;
           </Typography>
           <Typography
             typography="subtile2"
-            sx={styles.value(isWidth425pxOrLess)}
+            sx={styles.value(isWidth450pxOrLess)}
           >
             {formData.sublocation.label}
           </Typography>
         </Stack>
       )}
-      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+      <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
         <Typography
           typography="subtile1"
           sx={{
-            ...styles.label(isWidth425pxOrLess),
+            ...styles.label(isWidth450pxOrLess),
           }}
         >
           Relevant issue:&nbsp;
         </Typography>
-        <Box ml={isWidth425pxOrLess ? 0 : 3}>
+        <Box ml={isWidth450pxOrLess ? 0 : 3}>
           <IssueType {...formData.issueType} displayMode />
         </Box>
       </Stack>
-      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
-        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
+      <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth450pxOrLess)}>
           Description:&nbsp;
         </Typography>
         <Stack>
           <Typography
             typography="subtile2"
             sx={{
-              ...styles.value(isWidth425pxOrLess),
+              ...styles.value(isWidth450pxOrLess),
             }}
           >
             {formData.description}
@@ -136,14 +136,14 @@ export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
         </Stack>
       </Stack>
       {!!formData.attachments?.length && (
-        <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
+        <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
           <Typography
             typography="subtile1"
-            sx={styles.label(isWidth425pxOrLess)}
+            sx={styles.label(isWidth450pxOrLess)}
           >
             Media:&nbsp;
           </Typography>
-          <Box sx={styles.value(isWidth425pxOrLess)}>
+          <Box sx={styles.value(isWidth450pxOrLess)}>
             <MediaDisplay mediaList={formData.attachments} />
           </Box>
         </Stack>
@@ -151,27 +151,27 @@ export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
       <Typography typography="h4" sx={styles.contactInformationTitle}>
         Contact information
       </Typography>
-      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
-        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
+      <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth450pxOrLess)}>
           Your name:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
+        <Typography typography="subtile2" sx={styles.value(isWidth450pxOrLess)}>
           {formData.name}
         </Typography>
       </Stack>
-      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
-        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
+      <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth450pxOrLess)}>
           Email:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
+        <Typography typography="subtile2" sx={styles.value(isWidth450pxOrLess)}>
           {formData.email}
         </Typography>
       </Stack>
-      <Stack direction="row" sx={styles.infoItem(isWidth425pxOrLess)}>
-        <Typography typography="subtile1" sx={styles.label(isWidth425pxOrLess)}>
+      <Stack direction="row" sx={styles.infoItem(isWidth450pxOrLess)}>
+        <Typography typography="subtile1" sx={styles.label(isWidth450pxOrLess)}>
           Number:&nbsp;
         </Typography>
-        <Typography typography="subtile2" sx={styles.value(isWidth425pxOrLess)}>
+        <Typography typography="subtile2" sx={styles.value(isWidth450pxOrLess)}>
           {formData.phone}
         </Typography>
       </Stack>

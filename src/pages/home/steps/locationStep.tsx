@@ -50,7 +50,7 @@ export const LocationFormStep: React.FC<StepProps> = ({
 }) => {
   const { control, errors, watch } = formOptions;
   const locationWatch = watch("location");
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   const [locations, setLocations] = useState<any[]>([]);
   const [sublocations, setSublocations] = useState<any[]>([]);
@@ -93,18 +93,18 @@ export const LocationFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
+    <Stack p={isWidth450pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        {!isWidth425pxOrLess && (
+        {!isWidth450pxOrLess && (
           <Typography typography="h6" sx={styles.stepLabel}>
             Step 1/4
           </Typography>
         )}
-        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+        <Typography typography={isWidth450pxOrLess ? "h4" : "h5"}>
           Start with the location
         </Typography>
         <Typography
-          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          typography={isWidth450pxOrLess ? "subtitle1" : "subtitle2"}
           sx={styles.subtitle}
         >
           Please tell us where the issue has occurred using the dropdown below
@@ -155,7 +155,12 @@ export const LocationFormStep: React.FC<StepProps> = ({
         )}
       </Stack>
 
-      <Stack direction="row" justifyContent="flex-end" mt={"auto"}>
+      <Stack
+        direction="row"
+        justifyContent={isWidth450pxOrLess ? "flex-start" : "flex-end"}
+        ml={isWidth450pxOrLess ? 2 : 0}
+        mt={"auto"}
+      >
         <Button
           onClick={() => setStep(issueReportFormSteps.ISSUE_TYPE)}
           sx={styles.nextButton}

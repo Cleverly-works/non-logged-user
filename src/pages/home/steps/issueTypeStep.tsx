@@ -56,7 +56,7 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
   const issueTypeWatch = watch("issueType");
   const [issueTypes, setIssueTypes] = useState<any[]>([]);
   const { enqueueSnackbar } = useSnackbar();
-  const isWidth425pxOrLess = useMediaQuery("(max-width: 425px)");
+  const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   useEffect(() => {
     getIssueTypes()
@@ -76,18 +76,18 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Stack p={isWidth425pxOrLess ? 2 : 7} height="100%" width="90%">
+    <Stack p={isWidth450pxOrLess ? 2 : 7} height="100%" width="90%">
       <Stack spacing={1}>
-        {!isWidth425pxOrLess && (
+        {!isWidth450pxOrLess && (
           <Typography typography="h6" sx={styles.stepLabel}>
             Step 2/4
           </Typography>
         )}
-        <Typography typography={isWidth425pxOrLess ? "h4" : "h5"}>
+        <Typography typography={isWidth450pxOrLess ? "h4" : "h5"}>
           Describe the issue
         </Typography>
         <Typography
-          typography={isWidth425pxOrLess ? "subtitle1" : "subtitle2"}
+          typography={isWidth450pxOrLess ? "subtitle1" : "subtitle2"}
           sx={styles.subtitle}
         >
           Choose from the issue types below and provide some information and
@@ -119,7 +119,8 @@ export const IssueTypeFormStep: React.FC<StepProps> = ({
       </Stack>
       <Stack
         direction="row"
-        justifyContent="flex-end"
+        justifyContent={isWidth450pxOrLess ? "flex-start" : "flex-end"}
+        ml={isWidth450pxOrLess ? 2 : 0}
         columnGap={2}
         mt={"auto"}
       >

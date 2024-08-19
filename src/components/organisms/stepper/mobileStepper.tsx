@@ -9,6 +9,8 @@ import { useContext } from "react";
 import { mainContext } from "../../../context";
 import { colors } from "../../../const";
 
+import cleverlyLogo from "../../../images/cleverly-logo.png";
+
 const styles = {
   image: {
     width: "50px",
@@ -24,19 +26,38 @@ const styles = {
     textAlign: "end",
     color: colors.halfTransparentBlue,
   },
+  footerImage: {
+    width: "200px",
+    height: "44px",
+  },
+  heading: {
+    width: "100%",
+    borderBottom: `3px solid ${colors.separatorBlue}`,
+  },
 };
 
 const steps = [
   { currentStep: "Choose location", nextStep: "Select issue" },
   { currentStep: "Select issue", nextStep: "Provide details" },
-  { currentStep: "Provide details", nextStep: "Stay upload" },
-  { currentStep: "Stay upload", nextStep: "Confirm information" },
+  { currentStep: "Provide details", nextStep: "Stay updated" },
+  { currentStep: "Stay updated", nextStep: "Confirm information" },
 ];
 
 function MobileStepper(props: CircularProgressProps & { maxSteps: number }) {
   const { currentStep } = useContext(mainContext);
 
   const { maxSteps } = props;
+
+  if (currentStep === -1) {
+    return (
+      <Stack alignItems="center" mt="2em" mb="2em" sx={styles.heading} p={1}>
+        <a href="https://www.cleverly.works/" target="_blank" rel="noreferrer">
+          <img src={cleverlyLogo} alt="..." style={styles.footerImage} />
+        </a>
+        <Typography typography="subtitle2">© Cleverly Limited 2024</Typography>
+      </Stack>
+    );
+  }
 
   if (currentStep + 1 > maxSteps) {
     return (

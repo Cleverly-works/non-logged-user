@@ -4,31 +4,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { mainContext } from "../context";
 import { RoutesPath } from "../routing/routes";
 
-// type UsePredefinedQueryParamsReturnType = {
-//   predefinedParams: {
-//     location: {
-//       id: number;
-//       name: string;
-//       locationForSelect: {
-//         label: string;
-//         value: number;
-//       };
-//     };
-//     sublocation?: {
-//       id: number;
-//       name: string;
-//       sublocationForSelect: {
-//         label: string;
-//         value: number;
-//       };
-//     };
-//     customer: {
-//       id: number;
-//     };
-//   };
-//   rawStringParams: string;
-// };
-
 export const usePredefinedQueryParams = (): any => {
   const [searchParams] = useSearchParams();
   const { setGeneralAppParams } = useContext(mainContext);
