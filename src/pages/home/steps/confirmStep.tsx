@@ -70,6 +70,7 @@ export const ConfirmFormStep: React.FC<StepProps> = ({ formData, setStep }) => {
       height="100%"
       width="90%"
       display="inline-block"
+      sx={{ overflowY: "auto" }}
     >
       <Stack spacing={1}>
         <Typography typography="h5">

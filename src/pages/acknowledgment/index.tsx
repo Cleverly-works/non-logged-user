@@ -49,7 +49,11 @@ export const AcknowledgementPage: React.FC = () => {
   };
 
   return (
-    <Box p={isWidth450pxOrLess ? 2 : 4}>
+    <Box
+      p={isWidth450pxOrLess ? 2 : 4}
+      height="100%"
+      sx={{ overflowY: "auto" }}
+    >
       {!isWidth450pxOrLess && (
         <Typography typography="h4">Thank you!</Typography>
       )}
