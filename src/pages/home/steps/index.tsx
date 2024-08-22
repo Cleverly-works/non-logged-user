@@ -96,7 +96,6 @@ export const IssueReportForm = () => {
         reset();
       })
       .catch((e) => {
-        console.log("Error", e);
         enqueueSnackbar({
           variant: "error",
           message: e.data.message,

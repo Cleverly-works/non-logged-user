@@ -11,6 +11,7 @@ import { TextField } from "../../../components/atoms";
 import { Controller } from "react-hook-form";
 import { issueReportFormSteps } from ".";
 import { colors } from "../../../const";
+import { EMAIL_REGEX } from "../form/reportIssueValidationSchema";
 
 type StepProps = {
   setStep: (currentStep: number) => void;
@@ -65,19 +66,13 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
   formOptions,
   setStep,
 }) => {
-  const { register, errors, control, trigger, watch } = formOptions;
+  const { register, errors, control, watch, trigger } = formOptions;
 
   const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   const nameWatch = watch("name");
   const phoneWatch = watch("phone");
   const emailWatch = watch("email");
-
-  const hasError = !!errors.name || !!errors.phone || !!errors.email;
-
-  const handleValidate = async () => {
-    return trigger(["name", "email", "phone"]);
-  };
 
   return (
     <Stack p={isWidth450pxOrLess ? 2 : 7} height="100%" width="90%">
@@ -174,12 +169,12 @@ export const StayUploadFormStep: React.FC<StepProps> = ({
         </Button>
         <Button
           onClick={() => {
-            handleValidate().then((data) => {
-              console.log(data);
-              if (nameWatch && phoneWatch && emailWatch && !hasError) {
-                setStep(issueReportFormSteps.CONFIRM);
-              }
-            });
+            if (nameWatch && phoneWatch && EMAIL_REGEX?.test(emailWatch)) {
+              setStep(issueReportFormSteps.CONFIRM);
+              trigger(["name", "phone", "email"]);
+            } else {
+              trigger(["name", "phone", "email"]);
+            }
           }}
           sx={styles.nextButton}
           size="large"

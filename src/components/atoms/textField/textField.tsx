@@ -3,6 +3,10 @@ import { colors } from "../../../const";
 import { forwardRef } from "react";
 
 const StyledMuiInput = styled(MuiTextField)({
+  "&:-webkit-autofill": {
+    webkitBoxShadow: "0 0 0 100px inherit inset",
+    webkitTextFillColor: "inherit",
+  },
   [`& .MuiInputBase-root`]: {
     borderRadius: "15px",
     border: `2px solid ${colors.activeGreen}!important`,
@@ -18,12 +22,20 @@ const StyledMuiInput = styled(MuiTextField)({
     "&:focus": {
       outline: "none!important",
     },
+    "&:-webkit-autofill": {
+      webkitBoxShadow: "0 0 0 100px inherit inset",
+      webkitTextFillColor: "inherit",
+    },
   },
   textarea: {
     color: `${colors.defaultWhite}!important`,
     "-webkit-text-fill-color": `${colors.defaultWhite}!important`,
     "&:focus": {
       outline: "none!important",
+    },
+    "&:-webkit-autofill": {
+      webkitBoxShadow: "0 0 0 100px inherit inset",
+      webkitTextFillColor: "inherit",
     },
   },
 });

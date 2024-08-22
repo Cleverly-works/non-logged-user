@@ -105,7 +105,6 @@ export const MediaList: React.FC<MediaListProps> = ({
             <IconButton
               onClick={() => {
                 onDelete(ndx);
-                console.log(attachments);
               }}
             >
               <Delete sx={styles.icon} />

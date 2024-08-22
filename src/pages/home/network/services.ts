@@ -29,8 +29,6 @@ export const createReportedIssue = async (
 ): Promise<{ jobId: number }> => {
   const multipartFormData = createIssueDataAdapter(data);
 
-  console.log(multipartFormData.entries());
-
   const { data: response } = await apiClient.post<
     any,
     { data: { jobId: number } }
