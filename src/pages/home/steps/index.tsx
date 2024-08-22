@@ -53,6 +53,7 @@ export const IssueReportForm = () => {
     watch,
     register,
     handleSubmit,
+    setError,
     reset,
     trigger,
   } = useForm({
@@ -75,6 +76,7 @@ export const IssueReportForm = () => {
     control,
     errors,
     setValue,
+    setError,
     watch,
     register,
     handleSubmit,

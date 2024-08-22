@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, Stack, Button, useMediaQuery } from "@mui/material";
 import { TextField } from "../../../components/atoms";
 import { issueReportFormSteps } from ".";
@@ -13,6 +13,11 @@ type StepProps = {
 };
 
 const styles = {
+  error: {
+    color: colors.errorRed,
+    marginTop: "10px",
+    marginLeft: "10px",
+  },
   stepLabel: {
     color: colors.halfTransparentBlue,
   },
@@ -61,13 +66,16 @@ export const DetailsFormStep: React.FC<StepProps> = ({
   setStep,
 }) => {
   const { register, errors, watch, setValue, trigger } = formOptions;
+  const [error, setError] = useState<string | null>(null);
   const isWidth450pxOrLess = useMediaQuery("(max-width: 450px)");
 
   const mediaFilesWatch = watch("attachments") || [];
   const descriptionWatch = watch("description");
 
   const handleValidate = async () => {
-    await trigger("description");
+    if (!mediaFilesWatch?.length || !descriptionWatch) {
+      setError("Please provide description or select corresponding media");
+    }
   };
 
   return (
@@ -94,12 +102,15 @@ export const DetailsFormStep: React.FC<StepProps> = ({
         rows={4}
         sx={styles.description(isWidth450pxOrLess)}
         {...register("description")}
-        error={!!errors.description}
-        helperText={errors.description?.message}
       />
       <Box ml={2}>
         <MediaSelector values={mediaFilesWatch} setValue={setValue as any} />
       </Box>
+      {!!error && (
+        <Typography typography="subtitle2" sx={styles.error}>
+          {error}
+        </Typography>
+      )}
       <Stack
         direction="row"
         justifyContent={isWidth450pxOrLess ? "flex-start" : "flex-end"}

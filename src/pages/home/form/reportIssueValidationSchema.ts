@@ -27,11 +27,7 @@ export const issueReportValidationSchema = yup.object().shape({
     })
     .nonNullable()
     .required("Sublocation is required"),
-  description: yup
-    .string()
-    .required(
-      "Please provide at least one media or a description of the issue",
-    ),
+  description: yup.string(),
   name: yup.string().required("Please enter your name"),
   email: yup.string().email().required("Please enter your email"),
   phone: yup.string().required("Please enter your phone number"),
