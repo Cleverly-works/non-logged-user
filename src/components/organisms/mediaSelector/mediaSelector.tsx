@@ -16,6 +16,8 @@ const styles: Record<string, any> = {
     borderRadius: "20px",
     width: "150px",
     textTransform: "none",
+    height: "fit-content!important",
+    padding: "10px 5px!important",
     "&:hover": {
       backgroundColor: colors.activeGreen,
       opacity: 0.7,

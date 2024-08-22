@@ -17,10 +17,10 @@ const styles = {
     color: colors.halfTransparentBlue,
   },
   label: {
-    maxWidth: "300px",
     color: colors.activeGreen,
     marginBottom: "30px",
     textAlign: "center",
+    fontWeight: "600",
   },
   startButton: {
     backgroundColor: colors.activeGreen,
@@ -50,17 +50,17 @@ export const WelcomeMobilePage: React.FC = () => {
   };
 
   return (
-    <Stack alignItems="center" p={2} rowGap={4}>
+    <Stack alignItems="center" rowGap={4}>
       <img src={logo} style={styles.image} alt="..." />
-      <Stack ml={5} mt={2}>
-        <Typography typography="h5" textAlign="center" mb={2}>
+      <Stack m={2}>
+        <Typography typography="h5" fontWeight="600" textAlign="center" mb={2}>
           Welcome to the Homyze issue reporting tool.
         </Typography>
         <Typography typography="h6" textAlign="center" sx={styles.subtitle}>
           Brought to you by Cleverly.
         </Typography>
       </Stack>
-      <Typography typography="h6" sx={styles.label}>
+      <Typography typography="h5" m={2} sx={styles.label}>
         Here, you can report an issue quickly and easily.
       </Typography>
       <Button
