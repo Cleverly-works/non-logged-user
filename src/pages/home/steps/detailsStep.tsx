@@ -77,7 +77,12 @@ export const DetailsFormStep: React.FC<StepProps> = ({
   };
 
   return (
-    <Stack p={isWidth450pxOrLess ? 2 : 7} height="100%" width="90%">
+    <Stack
+      p={isWidth450pxOrLess ? 2 : 7}
+      height="100%"
+      width="90%"
+      sx={{ overflowY: "auto", overflowX: "hidden" }}
+    >
       <Stack spacing={1}>
         {!isWidth450pxOrLess && (
           <Typography typography="h6" sx={styles.stepLabel}>
