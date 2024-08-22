@@ -15,8 +15,6 @@ type StepProps = {
 const styles = {
   error: {
     color: colors.errorRed,
-    marginTop: "10px",
-    marginLeft: "10px",
   },
   stepLabel: {
     color: colors.halfTransparentBlue,
@@ -107,9 +105,11 @@ export const DetailsFormStep: React.FC<StepProps> = ({
         <MediaSelector values={mediaFilesWatch} setValue={setValue as any} />
       </Box>
       {!!error && (
-        <Typography typography="subtitle2" sx={styles.error}>
-          {error}
-        </Typography>
+        <Box m={2}>
+          <Typography typography="subtitle2" sx={styles.error}>
+            {error}
+          </Typography>
+        </Box>
       )}
       <Stack
         direction="row"
