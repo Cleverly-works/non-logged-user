@@ -47,6 +47,9 @@ const styles: Record<string, any> = {
   stepper: (isBlurred: boolean) => ({
     borderRight: `1px solid ${colors.separatorBlue}`,
     backdropFilter: isBlurred ? "blur(3px)!important" : "none",
+    overflowY: "auto",
+    overflowX: "hidden",
+    maxHeight: "100%",
   }),
 };
 
